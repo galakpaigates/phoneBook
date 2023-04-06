@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone Book</title>
+    <title>Phone Book - Phenom_J</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,34 +16,67 @@
     <div id="loadingDiv"></div>
 
     <div class="container">
-        <div class="header">
-            <h2><span class="firstWords">G</span>alakpai <span class="firstWords">G</span>ates <span class="firstWords">P</span>hone <span class="firstWords">B</span>ook</h2>
-        </div>
 
-        <div class="menuBar">
+        <div id="menuBar">
             <input type="button" class="menuButton" value="Menu">
         </div>
 
-        <aside id="sideBar">
-            <li>
-                <button class="searchButton">Search</button>
-            </li>
+        <input type="text" id="searchInput" placeholder="Search Contacts..." autofocus>
 
-            <li>
-                <button class="createNew">Create New</button>
-            </li>
+        <div id="newContactForm">
+            <form id="newInformationForm" action="">
+                <input type="text" id="name" placeholder="Name...">
+<br>
+                <input type="email" id="email" placeholder="Email address...">
+<br>
+                <input type="text" id="orangeNumber" placeholder="Orange Number...">
+<br>
+                <input type="text" id="lonestarNumber" placeholder="Lonestar Number...">
+<br>
+                <input type="text" id="location" placeholder="Location...">
+<br>
+                <textarea id="details" cols="30" rows="10" placeholder="Details about Contact..."></textarea>
+<br>
+                <div id="photoIdDiv">
+                    <button id="fileBtn">Upload Profile</button>
+                    <input type="file" id="photoId" style="display: none;">
 
-            <li>
-                <button class="addToFavorites">Add to Favorites</button>
-            </li>
-        </aside>
+                    <img src="" id="profilePhoto">
+                </div>
+<br>
+                <input type="submit" value="Add New Contact">
+            </form>
+        </div>
 
-        <div class="mainBody">
-            <h4>Welcome</h4>
+        <div id="sideBar">
+            <div class="header">
+                <h2><span class="firstWords">G</span>alakpai <span class="firstWords">G</span>ates 
+                <br> <span class="firstWords">P</span>hone <span class="firstWords">B</span>ook</h2>
+            </div>
 
-            <p class="notes">
-                Click the Menu Button to get started.
-            </p>
+            <ul>
+                <li>
+                    <button class="searchButton">Search</button>
+                </li>
+
+                <li>
+                    <button class="createNew">Create New</button>
+                </li>
+
+                <li>
+                    <button class="addToFavorites">Add to Favorites</button>
+                </li>
+
+                <li>
+                    <button class="viewAllContacts">View Contacts</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="mainBody">
+            <table id="contactsTable">
+
+            </table>
         </div>
     </div>
 

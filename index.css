@@ -8,24 +8,8 @@
     cursor: default;
 }
 
-.menuBar {
-    display: none;
-}
-
-#sideBar {
-    background-color: dodgerblue;
-    width: 300px;
-}
-
-#sideBar button {
-    padding: 10px;
-    border-radius: 7px;
-    background-color: grey;
-    color: white;
-    font-weight: bold;
-    display: block;
-    width: 100%;
-    margin: 7px;
+body {
+    background: url("./anotherphonebookbackground.png");
 }
 
 #loadingDiv {
@@ -40,7 +24,7 @@
     border-top-color: #ff6600;
     border-radius: 50%;
     animation: rotate 1s linear infinite;
-  }
+}
   @keyframes rotate {
     from {
       transform: rotate(0deg);
@@ -48,49 +32,73 @@
     to {
       transform: rotate(360deg);
     }
-  }
+}
 
 .menuButton:hover {
     cursor: pointer;
     background-color: white;
-    border: 2px solid darkcyan;
     color: darkcyan;
 }
 
 .header {
     background-color: cornflowerblue;
-    width: auto;
+    width: 100%;
     color: white;
     text-align: center;
     padding: 2.5%;
     text-transform: uppercase;
     font-size: small;
     max-height: 100px;
-    box-shadow: 0px 0px 21px black;
+    line-height: 35px;
 }
 
 .firstWords {
     font-size: 30px;
 }
 
-.menuButton {
-    background-color: darkcyan;
+#sideBar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 20vw;
+    height: 100vh;
+    background-color: #231f20;
+}
+
+#sideBar ul li {
+    border-top: 1px solid #525050;
+    padding: 15px;
+    list-style-type: none;
+}
+
+#sideBar ul li button {
+    padding: 7px;
+    background-color: cadetblue;
     color: white;
-    border-radius: 7px;
-    border: none;
-    margin: 21px;
-    height: 40px;
-    width: 70px;
-    font-weight: 1000;
-    font-size: 18px;
+    width: 100%;
+    font-size: 20px;
 }
 
-.mainBody {
+#sideBar ul li button:hover {
+    background-color: white;
+    color: cadetblue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#mainBody {
     text-align: center;
-    margin: 100px 5px 5px 5px;
+    margin-left: 21.5vw;
+    width: 77vw;
+    margin-top: 21px;
+    height: fit-content;
 }
 
-.mainBody h4 {
+#sideBar ul:last-child {
+    border-bottom: 1px solid #525050;
+}
+
+#mainBody h4 {
     font-size: 28px;
     color: teal;
     margin: 2%;
@@ -100,4 +108,179 @@
     font-size: 21px;
     color: teal;
     font-weight: bold;
+}
+
+#searchInput {
+    margin: 25px 0px 0px 22vw;
+    padding: 7px;
+    outline: 2px solid blue;
+    width: 25vw;
+    height: 3vw;
+    font-size: 18px;
+    display: none;
+    position: absolute;
+    animation: slideRight 0.5s ease-out;
+    animation-fill-mode: forwards;
+    transition: 0.5s;
+    cursor: text;
+}
+@keyframes slideRight {
+    0% {transform: translateX(-150px)}
+}
+
+#newContactForm {
+    margin: 4%;
+    margin-left: 35vw;
+    background: linear-gradient(to right, #ff6600, cornflowerblue);
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    padding: 12px;
+    display: none;
+}
+
+#newContactForm input[type="text"],
+#newContactForm input[type="button"],
+#newContactForm input[type="submit"],
+#newContactForm input[type="file"],
+#newContactForm input[type="email"],
+button {
+    display: block;
+    margin: 0;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+#newContactForm input[type="text"],
+#newContactForm input[type="email"],
+textarea {
+    cursor: text;
+}
+
+#newContactForm input[type="button"],
+#newContactForm input[type="submit"],
+button {
+    cursor: pointer;
+}
+
+#details {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 21px;
+    padding: 7px;
+    border-radius: 4px;
+    max-width: 100%;
+    max-height: 120px;
+    min-width: 100%;
+    min-height: 120px;
+}
+
+#profilePhoto {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.xmark {
+    color: red;
+    font-weight: bold;
+    line-height: 18px;
+}
+
+.pencils {
+    width: 15px;
+    height: 15px;
+}
+
+.editDeleteTd {
+    font-size: 20px;
+    width: 4vw; 
+}
+
+.contactsPhoto {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    margin-left: 5px;
+    margin-top: 4px;
+}
+
+#contactsTable tr {
+    box-shadow: 1px 1px 1px white;
+    color: white;
+    font-weight: bold;
+    padding: 7px;
+    background-color: cadetblue;
+}
+
+#contactsTable tr td {
+    box-shadow: -2px -1px 1px white;
+    width: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0px 10px 0px 10px;
+}
+
+.detailsTd {
+    width: 10vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 890.1px) {
+    #menuBar {
+        display: none;
+    }
+}
+
+@media (max-width: 890px) {
+    #mainBody {
+        display: none;
+    }
+
+    #sideBar {
+        width: 100vw;
+    }
+
+    #searchInput {
+        z-index: 9999;
+        width: 300px;
+        height: 35px;
+        margin-left: 12vw;
+    }
+
+    #newContactForm {
+        margin: 12px 12px 0px 12px;
+        width: 93vw;
+    }
+
+    .menuButton {
+        padding: 8px;
+        margin-left: 34.5vw;
+        margin-top: 12px;
+        font-size: x-large;
+        background-color: #0abfbc;
+        color: white;
+        font-weight: bold;
+        width: 35vw;
+    }
+
+    #mainBody {
+        margin-left: 10px;
+        width: fit-content;
+    }
+
+    #contactsTable {
+        margin-right: 21px;
+    }
+
+    .profilePhotoTd {
+        display: none;
+    }
 }

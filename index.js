@@ -1,13 +1,7 @@
-window.addEventListener('load', () => {
-    document.querySelector('.container').style.display = "none";
-
-    document.getElementById('loadingDiv').style.display = "list-item";
-});
-
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('loadingDiv').style.display = "none"
+    document.getElementById('loadingDiv').style.display = "none";
 
-    document.querySelector('.container').style.display = "list-item";
+    document.body.style.display = "block";
 
     const menuButton = document.querySelector('.menuButton');
     const sideBar = document.getElementById('sideBar');
@@ -40,49 +34,42 @@ document.addEventListener('DOMContentLoaded', () => {
         const userChoice = event.target;
 
         if (userChoice.className === "searchButton") {
-            if (searchInput.style.display === "none") {
-                searchInput.style.display = "list-item"; searchInput.style.marginTop = "-60px";
+            if (screen.width < 890.1) {sideBar.style.display = "none"};
+            searchInput.style.display = "list-item";
 
-                mainBody.style.marginTop = "85px";
-            }
-            else {
-                searchInput.style.display = "none";
-                mainBody.style.marginTop = "30px";
-            }
+            mainBody.style.marginTop = "85px";
+            newContactForm.style.display = "none";
+            searchInput.style.width = "70vw";
+
+            mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
+            contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none";
         }
 
         if (userChoice.className === "createNew") {
-            if (newContactForm.style.display === "none") {
-                if (screen.width < 890.1) {
-                    sideBar.style.display = "none";
-                }
-                newContactForm.style.display = "list-item";
-
-                mainBody.style.display = "none";
-
-                searchInput.style.display = "none";
+            if (screen.width < 890.1) {
+                sideBar.style.display = "none";
             }
+            newContactForm.style.display = "flex";
+
+            mainBody.style.display = "none";
+
+            searchInput.style.display = "none";
         }
 
         if (userChoice.id === "fileBtn" || userChoice.id === "profilePhoto") {
             photoId.click()
-            fileBtn.style.display = "none";
+            event.preventDefault()
         }
 
         if (userChoice.className === "viewAllContacts") {
-            if (contactsTable.style.display === "none") {
-                if (screen.width < 890.1) {
-                    sideBar.style.display = "none";
-                }
-
-                newContactForm.style.display = "none";
-
-                mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
-                contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none";
+            if (screen.width < 890.1) {
+                sideBar.style.display = "none";
             }
-            else {
-                contactsTable.style.display = "none";
-            }
+
+            newContactForm.style.display = "none";
+
+            mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
+            contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none";
         }
     })
 
@@ -92,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
         profilePhoto.style.display = "list-item"; profilePhoto.style.listStyleType = "none";
 
         const file = event.target.files[0];
-        console.log(file)
 
         const url = URL.createObjectURL(file);
 
@@ -102,37 +88,42 @@ document.addEventListener('DOMContentLoaded', () => {
             URL.revokeObjectURL(this.src);
         };
         photoId.style.display = "none";
+
+        fileBtn.style.display = "none";
     })
 
-    newInformationForm.addEventListener('submit', (event) => {
+    function addContentToDOM(event) {
         const nameValue = document.getElementById('name').value;
         const emailValue = document.getElementById('email').value;
         const orangeNumber = document.getElementById('orangeNumber').value;
         const lonestarNumber = document.getElementById('lonestarNumber').value;
         const details = document.getElementById('details').value;
         const profile = document.getElementById('profilePhoto').src;
+        const location = document.getElementById('location').value;
 
         event.preventDefault();
 
         contactsTable.innerHTML +=
-            `
+        `
             <tr>
                 <td class="editDeleteTd"><img src="./pencil.png" class="pencils"> | <span class="xmark">X</span></td>
                 <td class="profilePhotoTd"><img src="${profile}" class="contactsPhoto"></td>
-                <td class="nameTd">${nameValue}</td>
-                <td class="orangeNumberTd">${orangeNumber}</td>
-                <td class="lonestarNumberTd">${lonestarNumber}</td>
-                <td class="emailTd">${emailValue}</td>
+                <td class="contactDetailsTd"><h3>${nameValue}</h3> ${orangeNumber} | ${lonestarNumber} <br> ${emailValue}</td>
+                <td class="locationTd">${location}</td>
                 <td class="detailsTd">${details}</td>
             </tr>
         `
+    }
+
+    newContactForm.addEventListener('keyup', (event) => {
+        if (event.keyCode === 13) addContentToDOM();
     })
 
-    if (screen.width < 890.1) {
-        document.querySelectorAll('.editDeleteTd').style.display = "none";
-    }
+    fileBtn.addEventListener('click', addContentToDOM);
 
     menuButton.addEventListener('click', (event) => {
         sideBar.style.display = "list-item";
+        mainBody.style.display = "none";
+        newContactForm.style.display = "none";
     })
 });

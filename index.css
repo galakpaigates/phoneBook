@@ -9,6 +9,7 @@
 }
 
 body {
+    display: none;
     background: url("./anotherphonebookbackground.png");
 }
 
@@ -63,6 +64,7 @@ body {
     width: 20vw;
     height: 100vh;
     background-color: #231f20;
+    display: list-item;
 }
 
 #sideBar ul li {
@@ -131,9 +133,9 @@ body {
 #newContactForm {
     margin: 4%;
     margin-left: 35vw;
-    background: linear-gradient(to right, #ff6600, cornflowerblue);
+    background: linear-gradient(to right, #ff6600, lightslategray);
     width: 50vw;
-    display: flex;
+    display: flexbox;
     justify-content: center;
     align-items: center;
     border-radius: 12px;
@@ -154,8 +156,7 @@ button {
 }
 
 #newContactForm input[type="text"],
-#newContactForm input[type="email"],
-textarea {
+#newContactForm input[type="email"] {
     cursor: text;
 }
 
@@ -166,15 +167,16 @@ button {
 }
 
 #details {
-    width: 100%;
+    width: 48.3vw;
     height: 120px;
     margin-bottom: 21px;
     padding: 7px;
     border-radius: 4px;
-    max-width: 100%;
+    max-width: 48.3vw;
     max-height: 120px;
-    min-width: 100%;
+    min-width: 48.3vw;
     min-height: 120px;
+    cursor: text;
 }
 
 #profilePhoto {
@@ -193,11 +195,6 @@ button {
 .pencils {
     width: 15px;
     height: 15px;
-}
-
-.editDeleteTd {
-    font-size: 20px;
-    width: 4vw; 
 }
 
 .contactsPhoto {
@@ -221,8 +218,6 @@ button {
     box-shadow: -2px -1px 1px white;
     width: 40px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     padding: 0px 10px 0px 10px;
 }
 
@@ -233,13 +228,21 @@ button {
     text-overflow: ellipsis;
 }
 
-@media (min-width: 890.1px) {
-    #menuBar {
-        display: none;
-    }
+.contactsDetailsTd {
+    text-align: left;
 }
 
+#menuBar {
+    display: none;
+}
+
+/* Phone CSS Begins Here! */
 @media (max-width: 890px) {
+    #menuBar {
+        display: list-item;
+        margin: auto;
+    }
+
     #mainBody {
         display: none;
     }
@@ -252,28 +255,28 @@ button {
         z-index: 9999;
         width: 300px;
         height: 35px;
-        margin-left: 12vw;
+        margin-top: -37px;
     }
 
     #newContactForm {
         margin: 12px 12px 0px 12px;
         width: 93vw;
+        justify-content: left;
     }
 
     .menuButton {
         padding: 8px;
-        margin-left: 34.5vw;
-        margin-top: 12px;
+        margin: auto;
+        width: auto;
         font-size: x-large;
         background-color: #0abfbc;
         color: white;
         font-weight: bold;
-        width: 35vw;
     }
 
     #mainBody {
-        margin-left: 10px;
         width: fit-content;
+        margin: auto;
     }
 
     #contactsTable {
@@ -281,6 +284,36 @@ button {
     }
 
     .profilePhotoTd {
+        width: 40px;
+        height: 40px;
+    }
+
+    #details {
+        width: 86.5vw;
+        height: 120px;
+        margin-bottom: 21px;
+        padding: 7px;
+        border-radius: 4px;
+        max-width: 86.5vw;
+        max-height: 120px;
+        min-width: 48.3vw;
+        min-height: 120px;
+        cursor: text;
+    }
+
+    .detailsTd {
+        display: none;
+    }
+}
+
+@media (min-width: 499.9px) and (max-width: 200px) {
+    .detailsTd {
+        display: none;
+    }
+}
+
+@media (min-width: 890.1px) and (max-width: 500px) {
+    .locationTd {
         display: none;
     }
 }

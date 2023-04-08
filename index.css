@@ -8,31 +8,64 @@
     cursor: default;
 }
 
-body {
-    display: none;
-    background: url("./anotherphonebookbackground.png");
+/* #loadingDiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f9fb;
+    transition: opacity 0.75s, visibility 0.75s;
 }
 
-#loadingDiv {
-    display: block;
-    position: fixed;
-    top: 45%;
-    left: 45%;
-    transform: translate(-50%, -10%);
+#loadingDiv-hidden {
+    display: none;
+}
+
+#loadingDiv::after {
+    content: "";
     width: 50px;
     height: 50px;
-    border: 3px solid #ccc;
-    border-top-color: #ff6600;
+    border: 12px solid #dddddd;
+    border-top-color: #7449f5;
     border-radius: 50%;
-    animation: rotate 1s linear infinite;
+    animation: loadingCircle 0.75s ease infinite;
 }
-  @keyframes rotate {
+@keyframes loadingCircle {
     from {
-      transform: rotate(0deg);
+        transform: rotate(0turn);
     }
     to {
-      transform: rotate(360deg);
+        transform: rotate(1turn);
     }
+} */
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("./anotherphonebookbackground.png") repeat;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.getStartedDiv {
+    background: linear-gradient(to right, #ff6600, #928f8f);
+    padding: 7px;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 85px;
+}
+
+#getStartedText {
+    color: white;
+    text-align: center;
 }
 
 .menuButton:hover {
@@ -64,7 +97,7 @@ body {
     width: 20vw;
     height: 100vh;
     background-color: #231f20;
-    display: list-item;
+    display: flexbox;
 }
 
 #sideBar ul li {
@@ -89,7 +122,6 @@ body {
 }
 
 #mainBody {
-    text-align: center;
     margin-left: 21.5vw;
     width: 77vw;
     margin-top: 21px;
@@ -206,6 +238,10 @@ button {
     margin-top: 4px;
 }
 
+#contactsTable {
+    margin: auto;
+}
+
 #contactsTable tr {
     box-shadow: 1px 1px 1px white;
     color: white;
@@ -226,10 +262,20 @@ button {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: none;
 }
 
 .contactsDetailsTd {
     text-align: left;
+}
+
+.menuButton {
+    padding: 8px;
+    font-size: x-large;
+    background-color: #0abfbc;
+    color: white;
+    font-weight: bold;
+    display: none;
 }
 
 #menuBar {
@@ -243,7 +289,11 @@ button {
         margin: auto;
     }
 
-    #mainBody {
+    #searchInput {
+        z-index: 9999;
+        width: 300px;
+        height: 35px;
+        margin-top: -37px;
         display: none;
     }
 
@@ -251,36 +301,21 @@ button {
         width: 100vw;
     }
 
-    #searchInput {
-        z-index: 9999;
-        width: 300px;
-        height: 35px;
-        margin-top: -37px;
-    }
-
     #newContactForm {
-        margin: 12px 12px 0px 12px;
+        margin: 12px 12px 12px 12px;
         width: 93vw;
         justify-content: left;
-    }
-
-    .menuButton {
-        padding: 8px;
-        margin: auto;
-        width: auto;
-        font-size: x-large;
-        background-color: #0abfbc;
-        color: white;
-        font-weight: bold;
     }
 
     #mainBody {
         width: fit-content;
         margin: auto;
+        margin-top: -70px;
+        display: none;
     }
 
     #contactsTable {
-        margin-right: 21px;
+        margin: auto;
     }
 
     .profilePhotoTd {
@@ -300,20 +335,14 @@ button {
         min-height: 120px;
         cursor: text;
     }
-
-    .detailsTd {
-        display: none;
-    }
 }
 
-@media (min-width: 499.9px) and (max-width: 200px) {
-    .detailsTd {
-        display: none;
-    }
-}
-
-@media (min-width: 890.1px) and (max-width: 500px) {
+@media only screen and (min-width: 100px) and (max-width: 621px) {
     .locationTd {
+        display: none;
+    }
+
+    .editDeleteTd {
         display: none;
     }
 }

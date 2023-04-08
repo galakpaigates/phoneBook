@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (name.value.length > 2 && profilePhoto.src.length > 5 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 10 && location.value.length > 5 && details.value.length > 21) {
+        if (name.value.length > 2 && profilePhoto.src.length > 5 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 10 && location.value.length > 5 && details.value.length > 21 && email.value.endswith("@gmail.com")) {
             contactsTable.innerHTML +=
             `
                 <tr>

@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
     })
     document.addEventListener('keyup', (event) => {
-        if (event.keyCode) {return}
+        if (event.keyCode) {
+
+        }
     })
 
     searchInput.addEventListener('keyup', (event) => {
@@ -78,8 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (userChoice.id === "fileBtn" || userChoice.id === "profilePhoto") {
-            photoId.click()
-            event.preventDefault()
+            photoId.click();
+            console.log(event);
+            event.preventDefault();
         }
 
         if (userChoice.className === "viewAllContacts") {
@@ -106,6 +109,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     profilePhoto.style.display = "none";
 
+    addNewContactBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+    })
+
     photoId.addEventListener('change', (event) => {
         const file = event.target.files[0];
 
@@ -119,58 +126,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none";}
 
-        profilePhoto.onload = function () {
-            URL.revokeObjectURL(this.src);
-        };
-    })
+        addNewContactBtn.addEventListener('click', function addContentToDOM(event) {
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const orangeNumber = document.getElementById('orangeNumber');
+            const lonestarNumber = document.getElementById('lonestarNumber');
+            const details = document.getElementById('details');
+            const profile = document.getElementById('profilePhoto');
+            const location = document.getElementById('location');
 
-    addNewContactBtn.addEventListener('click', function addContentToDOM(event) {
-        const name = document.getElementById('name');
-        const email = document.getElementById('email');
-        const orangeNumber = document.getElementById('orangeNumber');
-        const lonestarNumber = document.getElementById('lonestarNumber');
-        const details = document.getElementById('details');
-        const profile = document.getElementById('profilePhoto');
-        const location = document.getElementById('location');
+            event.preventDefault();
 
-        event.preventDefault();
+            for (let i = 0; i < newInformationForm.length-2; i++) {
+                if (newInformationForm[i].value.length < 2) {
+                    newInformationForm[i].style.outline = "5px solid red";
+                }
+                else {
+                    newInformationForm[i].style.outline = "none";
+                }
+            }
 
-        for (let i = 0; i < newInformationForm.length-2; i++) {
-            if (newInformationForm[i].value.length < 2) {
-                newInformationForm[i].style.outline = "5px solid red";
+            if (name.value.length > 2 && profilePhoto.src.length > 5 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 10 && location.value.length > 5 && details.value.length > 12 && email.value.endsWith("@gmail.com")) {
+                contactsTable.innerHTML +=
+                `
+                    <tr>
+                        <td class="editDeleteTd"><img src="./pencil.png" class="pencils"> | <span class="xmark">X</span></td>
+                        <td class="profilePhotoTd"><img src="${profile.src}" class="contactsPhoto"></td>
+                        <td class="contactDetailsTd"><h3>${name.value}</h3> ${orangeNumber.value} | ${lonestarNumber.value} <br> ${email.value}</td>
+                        <td class="locationTd">${location.value}</td>
+                        <td class="detailsTd">${details.value}</td>
+                    </tr>
+                `
+        
+                name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
+        
+                profile.style.display = "none";
+                fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
+
+                if (contactsTable.textContent.length > 40) {
+                    getStartedDiv.style.display = "none";
+                }
+            
+                alert("Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!");
             }
             else {
-                newInformationForm[i].style.outline = "none";
+                details.style.outline = "5px solid red";
+                alert("Please Enter valid Responds in the Input Fields! \nCheck the Email Field and the Length of the Details Field and other Fields!");
             }
-        }
 
-        if (name.value.length > 2 && profilePhoto.src.length > 5 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 10 && location.value.length > 5 && details.value.length > 21 && email.value.endsWith("@gmail.com")) {
-            contactsTable.innerHTML +=
-            `
-                <tr>
-                    <td class="editDeleteTd"><img src="./pencil.png" class="pencils"> | <span class="xmark">X</span></td>
-                    <td class="profilePhotoTd"><img src="${profile.src}" class="contactsPhoto"></td>
-                    <td class="contactDetailsTd"><h3>${name.value}</h3> ${orangeNumber.value} | ${lonestarNumber.value} <br> ${email.value}</td>
-                    <td class="locationTd">${location.value}</td>
-                    <td class="detailsTd">${details.value}</td>
-                </tr>
-            `
-    
-            name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
-    
-            profile.style.display = "none";
-            fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
-
-            if (contactsTable.textContent.length > 40) {
-                getStartedDiv.style.display = "none";
-            }
-        
-            alert("Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!");
-        }
-        else {
-            details.style.outline = "5px solid red";
-            alert("Please Enter valid Responds in the Input Fields!")
-        }
+            URL.revokeObjectURL(this.src);
+        })
     });
 
     menuButton.addEventListener('click', (event) => {

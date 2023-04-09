@@ -24,7 +24,7 @@
         <input type="text" id="searchInput" placeholder="Search Contacts..." autofocus>
 
         <div id="newContactForm">
-            <form id="newInformationForm" action="">
+            <form id="newInformationForm">
                 <input type="text" id="name" placeholder="Name...">
 <br>
                 <input type="email" id="email" placeholder="Email address...">
@@ -38,13 +38,13 @@
                 <textarea id="details" cols="30" rows="10" placeholder="Details about Contact..."></textarea>
 <br>
                 <div id="photoIdDiv">
-                    <button id="fileBtn">Upload Profile</button>
+                    <button type="button" id="fileBtn">Upload Profile</button>
                     <input type="file" id="photoId" style="display: none;">
 
                     <img src="" id="profilePhoto">
                 </div>
 <br>
-                <input type="button" id="addNewContactBtn" value="Add New Contact">
+                <input type="submit" id="addNewContactBtn" value="Add New Contact">
             </form>
         </div>
 

@@ -241,6 +241,8 @@ button {
     height: 70px;
     border-radius: 50%;
     border: 1px solid white;
+    overflow: auto;
+    object-fit: cover;
 }
 
 .xmark {
@@ -261,6 +263,8 @@ button {
     border: 2px solid white;
     margin-left: 5px;
     margin-top: 4px;
+    overflow: auto;
+    object-fit: cover;
 }
 
 #contactsTable {

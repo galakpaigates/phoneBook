@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sideBar.style.display = "list-item";
 
         mainBody.style.display = "list-item";
-    }, 5000)
+    }, 3700)
 
     if (localStorage.getItem('allContactsArray')) {
 

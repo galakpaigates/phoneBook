@@ -16,6 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const getStartedText = document.getElementById('getStartedText');
     const loadingDiv = document.getElementById('loadingDiv');
     const getStartedDiv = document.querySelector('.getStartedDiv');
+    const alertDiv = document.getElementById('alertDiv');
+
+    alertDiv.style.display = "none";
+
+    setTimeout(() => {
+        loadingDiv.style.display = "none";
+
+        sideBar.style.display = "list-item";
+
+        mainBody.style.display = "list-item";
+    }, 5000)
 
     if (localStorage.getItem('allContactsArray')) {
         getStartedDiv.style.display = "none";
@@ -81,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.style.marginTop = "-60px"; searchInput.style.marginLeft = "28vw"; 
             }
 
+            console.log(contactsTable.textContent.length)
+
             mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
             contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none"; 
         }
@@ -124,7 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none";
             }
             else {
-                alert("You don't have any Contacts yet! \nClick the 'Create New' Button in the Menu to Create a New Contact!")
+                alertDiv.style.display = "block";
+                alertDiv.innerText = "You don't have any Contacts yet! \nClick the 'Create New' Button in the Menu to Create a New Contact!";
+
+                setTimeout(() => {
+                    alertDiv.style.display = "none";
+                }, 2500)
             }
         }
 
@@ -216,12 +234,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (contactsTable.textContent.length > 40) {
                 getStartedDiv.style.display = "none";
             }
-        
-            alert("Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!");
+                alertDiv.style.display = "block";
+                alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+                setTimeout(() => {
+                    alertDiv.style.display = "none";
+                }, 2500)
         }
         else {
             details.style.outline = "5px solid red";
-            alert("Please Enter valid Responds in the Input Fields! \nCheck the Email Field and the Length of the Details Field and other Fields!");
+            alertDiv.style.display = "block";
+            alertDiv.innerText = "Please Enter valid Responds in the Input Fields! \nCheck the Email Field and the Length of the Details Field and other Fields!";
+
+            setTimeout(() => {
+                alertDiv.style.display = "none";
+            }, 2500)
         }
     })
 

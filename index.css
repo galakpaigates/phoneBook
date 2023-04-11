@@ -24,6 +24,7 @@
     color: white;
     display: none;
     text-align: center;
+    font-weight: 1000;
 }
 
 #loadingDiv {

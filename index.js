@@ -27,20 +27,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000)
 
     if (localStorage.getItem('allContactsArray')) {
-        getStartedDiv.style.display = "none";
 
         const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
-        for (let i = 0; i < allContactsArray.length; i++) {
-            contactsTable.innerHTML +=
-            `
-                <tr title="${allContactsArray[i].name}" class="contact">
-                    <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
-                    <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
-                    <td class="locationTd">${allContactsArray[i].location}</td>
-                    <td class="detailsTd">${allContactsArray[i].details}</td>
-                </tr>
-            `
+        if (allContactsArray.length > 0) {
+            getStartedDiv.style.display = "none";
+
+            for (let i = 0; i < allContactsArray.length; i++) {
+                contactsTable.innerHTML +=
+                `
+                    <tr title="${allContactsArray[i].name}" class="contact">
+                        <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
+                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
+                        <td class="locationTd">${allContactsArray[i].location}</td>
+                        <td class="detailsTd">${allContactsArray[i].details}</td>
+                    </tr>
+                `
+            }
         }
     }
     else {
@@ -196,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
             allContactsArray.push({
-                id: localStorage.getItem('allContactsArray').length,
+                id: JSON.parse(localStorage.getItem('allContactsArray')).length+1,
                 name: name.value,
                 email: email.value,
                 orangeNumber: orangeNumber.value,

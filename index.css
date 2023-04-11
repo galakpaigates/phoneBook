@@ -22,6 +22,8 @@
     align-items: center;
     background: linear-gradient(to right, #ff6600, cadetblue);
     color: white;
+    display: none;
+    text-align: center;
 }
 
 #loadingDiv {

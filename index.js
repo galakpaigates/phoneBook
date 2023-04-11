@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const getStartedDiv = document.querySelector('.getStartedDiv');
     const alertDiv = document.getElementById('alertDiv');
 
-    alertDiv.style.display = "none";
-
     setTimeout(() => {
         loadingDiv.style.display = "none";
 
@@ -58,8 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.keyCode === 13) {return};
     })
 
-    console.log(contactsTable.children);
-
     searchInput.addEventListener('keyup', (event) => {
         for (let i = 0; i < contactsTable.children.length; i++) {
             const listItem = contactsTable.children[i].firstElementChild;
@@ -91,8 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactsTable.style.marginTop = "100px"; contactsTable.style.marginLeft = "15vw";
                 searchInput.style.marginTop = "-60px"; searchInput.style.marginLeft = "28vw"; 
             }
-
-            console.log(contactsTable.textContent.length)
 
             mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
             contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none"; 
@@ -146,12 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (userChoice.parentElement.parentElement.title.length > 5) {
-            console.log("The user wants to View this Specific Contacts Details!", userChoice.parentElement.parentElement.title)
-        }
-        else if (userChoice.parentElement.title.length > 5) {
-            console.log("The user wants to View this Specific Contacts Details!", userChoice.parentElement.title)
-        }
+        // if (userChoice.closest.title.length > 5) {
+        //     console.log("The user wants to View this Specific Contacts Details!", userChoice.closest.title)
+        // }
+        // else if (userChoice.parentElement.title.length > 5) {
+        //     console.log("The user wants to View this Specific Contacts Details!", userChoice.parentElement.title)
+        // }
     })
 
     profilePhoto.style.display = "none";
@@ -202,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
             allContactsArray.push({
+                id: localStorage.getItem('allContactsArray').length,
                 name: name.value,
                 email: email.value,
                 orangeNumber: orangeNumber.value,

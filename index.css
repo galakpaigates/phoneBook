@@ -172,7 +172,10 @@ body::before {
     align-items: center;
     border-radius: 12px;
     padding: 12px;
-    display: none;
+    display: none;animation: slideLeft 0.8s ease-out forwards;
+}
+@keyframes slideLeft {
+    0% {transform: translateX(300px); opacity: 0.3;}
 }
 
 #newContactForm input[type="text"],
@@ -240,6 +243,11 @@ button {
 
 #contactsTable {
     margin: auto;
+    animation: fallfown 0.8s ease-out forwards;
+    margin-bottom: 21px;
+}
+@keyframes fallDown {
+    0% {transform: translateY(-300px); opacity: 0.3;}
 }
 
 #contactsTable tr {
@@ -248,6 +256,7 @@ button {
     font-weight: bold;
     padding: 7px;
     background-color: cadetblue;
+    width: 100%;
 }
 
 #contactsTable tr td {

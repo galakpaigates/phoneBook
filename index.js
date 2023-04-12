@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingDiv = document.getElementById('loadingDiv');
     const getStartedDiv = document.querySelector('.getStartedDiv');
     const alertDiv = document.getElementById('alertDiv');
+    const contactProfilePageDiv = document.getElementById('contactProfilePageDiv');
+    const closeDiv = document.getElementById('closeDiv');
 
     setTimeout(() => {
         loadingDiv.style.display = "none";
@@ -72,6 +74,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
+    
+    function renderContacts() {
+        const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+
+        contactsTable.innerHTML = "";
+        
+        for (let i = 0; i < allContactsArray.length; i++) {
+            contactsTable.innerHTML +=
+            `
+                <tr title="${allContactsArray[i].name}" class="contact">
+                    <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
+                    <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
+                    <td class="locationTd">${allContactsArray[i].location}</td>
+                    <td class="detailsTd">${allContactsArray[i].details}</td>
+                </tr>
+            `
+        }
+    };
 
     document.addEventListener('click', (event) => {
         const userChoice = event.target;
@@ -130,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 newContactForm.style.display = "none";
+                contactProfilePageDiv.style.display = "none";
                 mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
                 contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none";
             }
@@ -143,13 +164,82 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // if (userChoice.closest.title.length > 5) {
-        //     console.log("The user wants to View this Specific Contacts Details!", userChoice.closest.title)
-        // }
-        // else if (userChoice.parentElement.title.length > 5) {
-        //     console.log("The user wants to View this Specific Contacts Details!", userChoice.parentElement.title)
-        // }
+        if (userChoice.id === "closeDiv") {
+            contactProfilePageDiv.innerHTML = "";
+            contactProfilePageDiv.style.display = "none";
+            contactsTable.style.display = "table-row-group";
+        }
+
+        if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
+            if (userChoice.closest('[title]').title.length > 5) {
+                contactsTable.style.display = "none";
+                const title = userChoice.closest('[title]').title;
+
+                const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+
+                const result = allContactsArray.filter((element) => element.name === title);
+                console.log(title);
+                
+                contactProfilePageDiv.style.display = "block";
+
+                contactProfilePageDiv.innerHTML = 
+                `
+                    <img src="${result[0].profile}" id="currentProfilePhoto">
+
+                    <div id="closeDiv">x</div>
+
+                    <h2>${result[0].name}</h2>
+
+                    <span>Orange Number</span>
+
+                    <h3>${result[0].orangeNumber}</h3>
+
+                    <span>Lonestar Number</span>
+
+                    <h3>${result[0].lonestarNumber}</h3>
+
+                    <span>Email Address</span>
+
+                    <h3>${result[0].email}</h3>
+
+                    <span>Location</span>
+
+                    <h3>${result[0].location}</h3>
+
+                    <span>Contact's Details</span>
+
+                    <h3>${result[0].details}</span>
+
+                    <hr>
+
+                    <button id="editButton">Edit</button>
+
+                    <button id="deleteButton">Delete</button>
+                `
+
+                const editButton = document.getElementById('editButton');
+                const deleteButton = document.getElementById('deleteButton');
+                deleteButton.addEventListener('click', (event) => {
+                    deleteButton.disabled = true;
+                    setTimeout(() => {
+                        const pendingDelete = allContactsArray.findIndex((contact) => contact.name === title)
+
+                        allContactsArray.splice(pendingDelete, 1);
+
+                        localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                        contactProfilePageDiv.style.display = "none";
+
+                        contactsTable.style.display = "table-row-group";
+
+                        renderContacts();
+                    }, 1500);
+                });
+            }
+        }
     })
+
+
 
     profilePhoto.style.display = "none";
 
@@ -195,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (name.value.length > 2 && profilePhoto.src.length > 32 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 12 && location.value.length > 7 && details.value.length > 30 && email.value.endsWith("@gmail.com")) {
+        if (name.value.length > 2 && profilePhoto.src.length > 32 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 12 && location.value.length > 7 && details.value.length > 18 && email.value.endsWith("@gmail.com")) {
             const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
             allContactsArray.push({
@@ -210,19 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
-            contactsTable.innerHTML = "";
-            
-            for (let i = 0; i < allContactsArray.length; i++) {
-                contactsTable.innerHTML +=
-                `
-                    <tr title="${allContactsArray[i].name}" class="contact">
-                        <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
-                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
-                        <td class="locationTd">${allContactsArray[i].location}</td>
-                        <td class="detailsTd">${allContactsArray[i].details}</td>
-                    </tr>
-                `
-            }
+
+            renderContacts();
     
             name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
     
@@ -232,12 +311,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (contactsTable.textContent.length > 40) {
                 getStartedDiv.style.display = "none";
             }
-                alertDiv.style.display = "block";
-                alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
 
-                setTimeout(() => {
-                    alertDiv.style.display = "none";
-                }, 2500)
+            alertDiv.style.display = "block";
+            alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+            setTimeout(() => {
+                alertDiv.style.display = "none";
+            }, 2500)
         }
         else {
             details.style.outline = "5px solid red";

@@ -204,8 +204,7 @@ body::before {
 #newContactForm input[type="button"],
 #newContactForm input[type="submit"],
 #newContactForm input[type="file"],
-#newContactForm input[type="email"],
-button {
+#newContactForm input[type="email"] {
     display: block;
     margin: 0;
     padding: 7px;
@@ -221,6 +220,9 @@ button {
 #newContactForm input[type="submit"],
 button {
     cursor: pointer;
+    margin: 0;
+    padding: 7px;
+    border-radius: 7px;
 }
 
 #details {
@@ -318,6 +320,59 @@ button {
     display: none;
 }
 
+#contactProfilePageDiv {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    top: 15vh;
+    left: 15vh;
+    right: 15vh;
+    border-radius: 12px;
+    box-shadow: 0px 0px 7px black;
+    display: none;
+    margin: auto;
+    margin: -14vh 7vw 10vh 30vw;
+    padding: 25px;
+    font-weight: 1000;
+}
+
+#contactProfilePageDiv::before {
+    opacity: 0.8;
+    color: khaki;
+    z-index: -1;
+    content: "";
+    position: fixed;
+}
+
+#contactProfilePageDiv span {
+    text-decoration: underline;
+}
+
+#currentProfilePhoto {
+    width: 100px;
+    height: 100px;
+    overflow: auto;
+    object-fit: cover;
+    border-radius: 15%;
+}
+
+#closeDiv {
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    padding-top: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    float: right;
+    height: 30px;
+    width: 30px;
+    background-color: crimson;
+}
+
+#deleteButton {
+    color: white;
+    background-color: crimson;
+}
+
 /* Phone CSS Begins Here! */
 @media (max-width: 890px) {
     #menuBar {
@@ -371,6 +426,36 @@ button {
         min-width: 48.3vw;
         min-height: 120px;
         cursor: text;
+    }
+
+    #contactProfilePageDiv {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        top: 15vh;
+        left: 15vh;
+        right: 15vh;
+        border-radius: 12px;
+        box-shadow: 0px 0px 7px black;
+        display: none;
+        margin: auto;
+        margin: 10vh 10vw 10vh 10vw;
+        background-color: #f7f4ea;
+        padding: 15px;
+        font-weight: 1000;
+        overflow: auto;
+    }
+
+    #contactProfilePageDiv span {
+        text-decoration: underline;
+    }
+
+    #currentProfilePhoto {
+        width: 100px;
+        height: 100px;
+        overflow: auto;
+        object-fit: cover;
+        border-radius: 15%;
     }
 }
 

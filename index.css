@@ -16,7 +16,7 @@
     margin: auto;
     padding: 15px;
     border: 2px solid white;
-    font-size: 17px;
+    font-size: 19px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,15 +40,11 @@
     transition: opacity 0.75s, visibility 0.75s;
 }
 
-#loadingDiv-hidden {
-    display: none;
-}
-
 #loadingDiv::after {
     content: "";
     width: 50px;
     height: 50px;
-    border: 12px solid #dddddd;
+    border: 10px solid #dddddd;
     border-top-color: #7449f5;
     border-radius: 50%;
     animation: loadingCircle 0.75s ease infinite;
@@ -69,7 +65,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("./img/anotherphonebookbackground.png") repeat;
+    background: linear-gradient(to left, #74bad6, darkgray);
     opacity: 0.4;
     z-index: -1;
 }
@@ -328,10 +324,10 @@ button {
     left: 15vh;
     right: 15vh;
     border-radius: 12px;
-    box-shadow: 0px 0px 7px black;
+    box-shadow: 0px 0px 7px rgb(106, 104, 104);
     display: none;
     margin: auto;
-    margin: -14vh 7vw 10vh 30vw;
+    margin: 10vh 7vw 10vh 30vw;
     padding: 25px;
     font-weight: 1000;
 }
@@ -436,11 +432,10 @@ button {
         left: 15vh;
         right: 15vh;
         border-radius: 12px;
-        box-shadow: 0px 0px 7px black;
+        box-shadow: 0px 0px 7px #928f8f;
         display: none;
         margin: auto;
         margin: 10vh 10vw 10vh 10vw;
-        background-color: #f7f4ea;
         padding: 15px;
         font-weight: 1000;
         overflow: auto;

@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setTimeout(() => {
                     alertDiv.style.display = "none";
-                }, 2500)
+                }, 5500)
             }
         }
 
@@ -171,14 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
-            if (userChoice.closest('[title]').title.length > 5) {
+            if (userChoice.closest('[title]').title.length > 2) {
                 contactsTable.style.display = "none";
                 const title = userChoice.closest('[title]').title;
 
                 const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
                 const result = allContactsArray.filter((element) => element.name === title);
-                console.log(title);
                 
                 contactProfilePageDiv.style.display = "block";
 
@@ -221,12 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const deleteButton = document.getElementById('deleteButton');
                 deleteButton.addEventListener('click', (event) => {
                     deleteButton.disabled = true;
+
+                    alertDiv.innerText = "Contact Deleted!";
+                    alertDiv.style.display = "block";
                     setTimeout(() => {
                         const pendingDelete = allContactsArray.findIndex((contact) => contact.name === title)
 
                         allContactsArray.splice(pendingDelete, 1);
 
                         localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                        alertDiv.style.display = "none";
 
                         contactProfilePageDiv.style.display = "none";
 
@@ -278,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < newInformationForm.length-2; i++) {
             if (newInformationForm[i].value.length < 2) {
-                newInformationForm[i].style.outline = "5px solid red";
+                newInformationForm[i].style.outline = "5px solid crimson";
             }
             else {
                 newInformationForm[i].style.outline = "none";
@@ -286,49 +290,76 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (name.value.length > 2 && profilePhoto.src.length > 32 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 12 && location.value.length > 7 && details.value.length > 18 && email.value.endsWith("@gmail.com")) {
-            const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
-            allContactsArray.push({
-                id: JSON.parse(localStorage.getItem('allContactsArray')).length+1,
-                name: name.value,
-                email: email.value,
-                orangeNumber: orangeNumber.value,
-                lonestarNumber: lonestarNumber.value,
-                location: location.value,
-                details: details.value,
-                profile: profileURLData,
-            })
+            if (orangeNumber.value.startsWith("0776") || orangeNumber.value.startsWith("0770") || orangeNumber.value.startsWith("0779") || orangeNumber.value.startsWith("0778") || orangeNumber.value.startsWith("0775") || orangeNumber.value.startsWith("0777")) {
 
-            localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+                if (lonestarNumber.value.startsWith("0880") || lonestarNumber.value.startsWith("0881") || lonestarNumber.value.startsWith("0888") || lonestarNumber.value.startsWith("0886") || lonestarNumber.value.startsWith("0555")) {
+                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
-            renderContacts();
+                    allContactsArray.push({
+                        id: JSON.parse(localStorage.getItem('allContactsArray')).length+1,
+                        name: name.value,
+                        email: email.value,
+                        orangeNumber: orangeNumber.value,
+                        lonestarNumber: lonestarNumber.value,
+                        location: location.value,
+                        details: details.value,
+                        profile: profileURLData,
+                    })
+
+                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                    renderContacts();
+            
+                    name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
+            
+                    profile.style.display = "none";
+                    fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
+
+                    if (contactsTable.textContent.length > 40) {
+                        getStartedDiv.style.display = "none";
+                    }
+
+                    alertDiv.style.display = "block";
+                    alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+                    setTimeout(() => {
+                        alertDiv.style.display = "none";
+                    }, 3000)
+                }
+
+                else {
+                    lonestarNumber.style.outline = "5px solid crimson";
+                    alertDiv.textContent = "Please Input a valid Lonestar Phone Number!";
+                    alertDiv.style.display = "block";
     
-            name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
-    
-            profile.style.display = "none";
-            fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
-
-            if (contactsTable.textContent.length > 40) {
-                getStartedDiv.style.display = "none";
+                    setTimeout(() => {
+                        lonestarNumber.style.outline = "none";
+                        alertDiv.style.display = "none";
+                    }, 2500)
+                }
             }
 
-            alertDiv.style.display = "block";
-            alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+            else {
+                orangeNumber.style.outline = "5px solid crimson";
+                alertDiv.textContent = "Please Input a valid Orange Phone Number!";
+                alertDiv.style.display = "block";
 
-            setTimeout(() => {
-                alertDiv.style.display = "none";
-            }, 2500)
+                setTimeout(() => {
+                    orangeNumber.style.outline = "none";
+                    alertDiv.style.display = "none";
+                }, 2500)
+            }
         }
         else {
-            details.style.outline = "5px solid red";
             alertDiv.style.display = "block";
-            alertDiv.innerText = "Please Enter valid Responds in the Input Fields! \nCheck the Email Field and the Length of the Details Field and other Fields!";
+            alertDiv.innerText = "Please Enter valid Responds in the Input Fields! \nHints: \n1. Check if your email is correct! \n2. Check the Length of the Details Field \n3. Check if the Orange and Lonestar Numbers are Valid \n4. Contact Photo is Required! \n5. Location, etc...";
 
             setTimeout(() => {
                 alertDiv.style.display = "none";
-            }, 2500)
+            }, 10000)
         }
-    })
+    });
 
     menuButton.addEventListener('click', (event) => {
         sideBar.style.display = "list-item";

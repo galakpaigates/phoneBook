@@ -187,27 +187,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <div id="closeDiv">x</div>
 
-                    <h2>${result[0].name}</h2>
+                    <h2 id="contactNameH2">${result[0].name}</h2>
 
                     <span>Orange Number</span>
 
-                    <h3>${result[0].orangeNumber}</h3>
+                    <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3>
 
                     <span>Lonestar Number</span>
 
-                    <h3>${result[0].lonestarNumber}</h3>
+                    <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3>
 
                     <span>Email Address</span>
 
-                    <h3>${result[0].email}</h3>
+                    <h3 id="contactEmailH3">${result[0].email}</h3>
 
                     <span>Location</span>
 
-                    <h3>${result[0].location}</h3>
+                    <h3 id="contactLocationH3">${result[0].location}</h3>
 
                     <span>Contact's Details</span>
 
-                    <h3>${result[0].details}</span>
+                    <h3 id="contactDetailsH3">${result[0].details}</h3>
 
                     <hr>
 
@@ -218,6 +218,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const editButton = document.getElementById('editButton');
                 const deleteButton = document.getElementById('deleteButton');
+
+                editButton.addEventListener('click', (event) => {
+
+                    if (editButton.innerText === "Edit") {
+                        const contactNameH2 = document.getElementById('contactNameH2');
+                        const contactOrangeNumberH3 = document.getElementById('contactOrangeNumberH3');
+                        const contactLonestarNumberH3 = document.getElementById('contactLonestarNumberH3');
+                        const contactEmailH3 = document.getElementById('contactEmailH3');
+                        const contactLocationH3 = document.getElementById('contactLocationH3');
+                        const contactDetailsH3 = document.getElementById('contactDetailsH3');
+    
+                        contactNameH2.insertAdjacentHTML("beforeend", 
+                        `
+                            <input type="text" id="newNameValueInput" value="${contactNameH2.innerText}" placeholder="Enter New Name...">
+                        `);
+
+                        contactOrangeNumberH3.insertAdjacentHTML("beforeend", 
+                        `
+                            <input type="tel" id="newOrangeNumberValueInput" value="${contactOrangeNumberH3.innerText}" placeholder="Enter New Orange Number...">
+                        `);
+
+                        contactLonestarNumberH3.insertAdjacentHTML("beforeend", 
+                        `
+                            <input type="tel" id="newLonestarNumberValueInput" value="${contactLonestarNumberH3.innerText}" placeholder="Enter New Lonestar Number...">
+                        `);
+
+                        contactEmailH3.insertAdjacentHTML("beforeend", 
+                        `
+                            <input type="email" id="newEmailValueInput" value="${contactEmailH3.innerText}" placeholder="Enter New Email Address...">
+                        `);
+
+                        contactLocationH3.insertAdjacentHTML("beforeend", 
+                        `
+                            <input type="text" value="${contactLocationH3.innerText}" id="newLocationValueInput" placeholder="Enter New Location...">
+                        `);
+
+                        contactDetailsH3.insertAdjacentHTML("afterend", 
+                        `
+                            <textarea id="newDetailsValueInput" placeholder="Enter New Details...">${contactDetailsH3.innerText}</textarea>
+                        `);
+    
+                        setTimeout(() => {
+                            editButton.innerText = "Save Changes";
+                        }, 500)
+                    }
+
+                    if (editButton.innerText === "Save Changes") {
+                        editButton.innerText = "Edit";
+
+                        const allContactFieldInputs = contactProfilePageDiv.querySelectorAll('input');
+                        const newDetailsValueInput = document.getElementById('newDetailsValueInput');
+
+                        for (let i = 0; i < allContactFieldInputs.length; i++) {
+                            allContactFieldInputs[i].style.display = "none";
+                        }
+                        newDetailsValueInput.style.display = "none";
+                    }
+                })
+
                 deleteButton.addEventListener('click', (event) => {
                     deleteButton.disabled = true;
 
@@ -243,8 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-
-
     profilePhoto.style.display = "none";
 
     let profileURLData;
@@ -264,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fileBtn.style.display = "none";
             }
             else {fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none";}
-           profileURLData =  readFile.result
+           profileURLData =  readFile.result;
         })
         readFile.readAsDataURL(file);
     });
@@ -297,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
                     allContactsArray.push({
-                        id: JSON.parse(localStorage.getItem('allContactsArray')).length+1,
+                        id: JSON.parse(localStorage.getItem('allContactsArray'))[JSON.parse(localStorage.getItem('allContactsArray')).length].id+1,
                         name: name.value,
                         email: email.value,
                         orangeNumber: orangeNumber.value,

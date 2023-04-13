@@ -353,8 +353,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (lonestarNumber.value.startsWith("0880") || lonestarNumber.value.startsWith("0881") || lonestarNumber.value.startsWith("0888") || lonestarNumber.value.startsWith("0886") || lonestarNumber.value.startsWith("0555")) {
                     const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
+                    let newId;
+
+                    if (allContactsArray.length > 0) {
+                        newId = allContactsArray[allContactsArray.length-1].id+1;
+                    }
+                    else {
+                        newId = allContactsArray.length+1;
+                    }
+
                     allContactsArray.push({
-                        id: allContactsArray.length-1,
+                        id: newId,
                         name: name.value,
                         email: email.value,
                         orangeNumber: orangeNumber.value,

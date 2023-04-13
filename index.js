@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
                     allContactsArray.push({
-                        id: JSON.parse(localStorage.getItem('allContactsArray'))[JSON.parse(localStorage.getItem('allContactsArray')).length].id+1,
+                        id: allContactsArray[allContactsArray.length-1].id+1,
                         name: name.value,
                         email: email.value,
                         orangeNumber: orangeNumber.value,

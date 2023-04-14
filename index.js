@@ -267,13 +267,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (editButton.innerText === "Save Changes") {
                         editButton.innerText = "Edit";
 
-                        const allContactFieldInputs = contactProfilePageDiv.querySelectorAll('input');
-                        const newDetailsValueInput = document.getElementById('newDetailsValueInput');
+                        const pendingChange = allContactsArray.findIndex((contact) => contact.name === title)
+                        
+                        allContactsArray[pendingChange].name = document.getElementById('newNameValueInput').value;
+                        allContactsArray[pendingChange].orangeNumber = document.getElementById('newOrangeNumberValueInput').value;
+                        allContactsArray[pendingChange].lonestarNumber = document.getElementById('newLonestarNumberValueInput').value;
+                        allContactsArray[pendingChange].email = document.getElementById('newEmailValueInput').value;
+                        allContactsArray[pendingChange].location = document.getElementById('newLocationValueInput').value;
+                        allContactsArray[pendingChange].details = document.getElementById('newDetailsValueInput').value;
 
-                        for (let i = 0; i < allContactFieldInputs.length; i++) {
-                            allContactFieldInputs[i].style.display = "none";
-                        }
-                        newDetailsValueInput.style.display = "none";
+                        localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                        alertDiv.innerText = "Edit Saved!";
+                        alertDiv.style.display = "block";
+
+                        setTimeout(() => {
+                            const allContactFieldInputs = contactProfilePageDiv.querySelectorAll('input');
+                            const newDetailsValueInput = document.getElementById('newDetailsValueInput');
+
+                            for (let i = 0; i < allContactFieldInputs.length; i++) {
+                                allContactFieldInputs[i].style.display = "none";
+                            }
+                            newDetailsValueInput.style.display = "none";
+                        }, 500)
+
+                        setTimeout(() => {
+                            alertDiv.style.display = "none";
+                            contactProfilePageDiv.style.display = "none";
+                            contactsTable.style.display = "table-row-group";
+    
+                            renderContacts();
+                        }, 1000);
                     }
                 })
 

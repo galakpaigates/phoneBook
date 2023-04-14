@@ -391,6 +391,7 @@ button {
     border-radius: 4px;
     font-size: 16px;
     min-width: 235px;
+    cursor: text;
 }
 
 #contactProfilePageDiv textarea {
@@ -401,6 +402,7 @@ button {
     font-size: 16.5px;
     min-width: 265px;
     width: 50vw;
+    cursor: text;
 }
 
 /* Phone CSS Begins Here! */

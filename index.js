@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const alertDiv = document.getElementById('alertDiv');
     const contactProfilePageDiv = document.getElementById('contactProfilePageDiv');
     const closeDiv = document.getElementById('closeDiv');
+    const rightClickOptionsDiv = document.getElementById('rightClickOptionsDiv');
 
     setTimeout(() => {
         loadingDiv.style.display = "none";
@@ -55,8 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('contextmenu', (event) => {
+        rightClickOptionsDiv.style.display = "flex";
+
         event.preventDefault();
-    })
+    });
+    
     document.addEventListener('keyup', (event) => {
         if (event.keyCode === 13) {return};
     })
@@ -87,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
                     <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
                     <td class="locationTd">${allContactsArray[i].location}</td>
-                    <td class="detailsTd">${allContactsArray[i].details}</td>
                 </tr>
             `
         }
@@ -95,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (event) => {
         const userChoice = event.target;
+        rightClickOptionsDiv.style.display = "none";
 
         if (userChoice.className === "searchButton") {
             if (screen.width < 890) {
@@ -107,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (screen.width > 890) {
                 mainBody.style.marginTop = "100px";
-                contactsTable.style.marginTop = "100px"; contactsTable.style.marginLeft = "15vw";
-                searchInput.style.marginTop = "-60px"; searchInput.style.marginLeft = "28vw"; 
+                contactsTable.style.marginTop = "100px";
+                searchInput.style.marginTop = "-60px"; searchInput.style.marginLeft = "21.5vw"; 
             }
 
             mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
@@ -116,6 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (userChoice.className === "createNew") {
+            contactProfilePageDiv.style.display = "none";
             searchInput.style.display = "none";
             newContactForm.style.display = "list-item"; newContactForm.style.listStyleType = "none";
             mainBody.style.display = "none";
@@ -172,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
             if (userChoice.closest('[title]').title.length > 2) {
+                searchInput.style.display = "none";
                 contactsTable.style.display = "none";
                 const title = userChoice.closest('[title]').title;
 
@@ -261,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
                         setTimeout(() => {
                             editButton.innerText = "Save Changes";
-                        }, 500)
+                        }, 300)
                     }
 
                     if (editButton.innerText === "Save Changes") {
@@ -350,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         readFile.readAsDataURL(file);
     });
 
-    addNewContactBtn.addEventListener('click', function addContentToDOM(event) {
+    addNewContactBtn.addEventListener('click', (event) => {
         const name = document.getElementById('name');
         const email = document.getElementById('email');
         const orangeNumber = document.getElementById('orangeNumber');
@@ -370,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (name.value.length > 2 && profilePhoto.src.length > 32 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 12 && location.value.length > 7 && details.value.length > 18 && email.value.endsWith("@gmail.com")) {
+        if (name.value.length > 2 && profilePhoto.src.length > 32 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 10 && location.value.length > 7 && details.value.length > 21 && email.value.endsWith(".com")) {
 
             if (orangeNumber.value.startsWith("0776") || orangeNumber.value.startsWith("0770") || orangeNumber.value.startsWith("0779") || orangeNumber.value.startsWith("0778") || orangeNumber.value.startsWith("0775") || orangeNumber.value.startsWith("0777")) {
 

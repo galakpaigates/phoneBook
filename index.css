@@ -65,9 +65,38 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to left, #74bad6, darkgray);
+    background: linear-gradient(to left, #56a1bf, #c2bfbf);
     opacity: 0.4;
     z-index: -1;
+}
+
+#rightClickOptionsDiv {
+    position: absolute;
+    z-index: 9999;
+    background-color: #9e9c9c;
+    top: 15vh;
+    left: 43vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    display: none;
+    width: 120px;
+}
+
+#rightClickOptionsDiv ul li {
+    list-style-type: none;
+}
+
+#rightClickOptionsDiv button {
+    border-radius: 0;
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    padding: 4px;
+    width: 100%;
+    margin: 8px 0px;
 }
 
 .getStartedDiv {
@@ -175,6 +204,7 @@ body::before {
     animation-fill-mode: forwards;
     transition: 0.5s;
     cursor: text;
+    z-index: 500;
 }
 @keyframes slideRight {
     0% {transform: translateX(-150px)}
@@ -190,6 +220,7 @@ body::before {
     align-items: center;
     border-radius: 12px;
     padding: 12px;
+    box-shadow: 0px 0px 12px gray;
     display: none;animation: slideLeft 0.8s ease-out forwards;
 }
 @keyframes slideLeft {
@@ -198,11 +229,11 @@ body::before {
 
 #newContactForm input[type="text"],
 #newContactForm input[type="button"],
-#newContactForm input[type="submit"],
-#newContactForm input[type="file"],
+#newContactForm input[type="tel"],
 #newContactForm input[type="email"] {
     display: block;
     margin: 0;
+    min-width: 25vw;
     padding: 7px;
     border-radius: 5px;
 }
@@ -266,7 +297,6 @@ button {
 }
 
 #contactsTable {
-    margin: auto;
     animation: fallDown 0.8s ease-out forwards;
     margin-bottom: 21px;
     list-style-type: none;
@@ -413,7 +443,7 @@ button {
     }
 
     #searchInput {
-        z-index: 9999;
+        z-index: 500;
         width: 300px;
         height: 35px;
         margin-top: -37px;

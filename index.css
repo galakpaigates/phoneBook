@@ -239,7 +239,8 @@ body::before {
 }
 
 #newContactForm input[type="text"],
-#newContactForm input[type="email"] {
+#newContactForm input[type="email"],
+#newContactForm input[type="tel"] {
     cursor: text;
 }
 
@@ -263,6 +264,7 @@ button {
     min-width: 48.3vw;
     min-height: 120px;
     cursor: text;
+    resize: none;
 }
 
 #profilePhoto {
@@ -530,6 +532,12 @@ button {
 
     #contactProfilePageDiv textarea {
         margin-left: -7px;
+        resize: none;
+    }
+
+    #alertDiv {
+        width: 100vw;
+        margin-left: -25vw;
     }
 }
 

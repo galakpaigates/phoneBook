@@ -4,21 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const sideBar = document.getElementById('sideBar');
     const mainBody = document.getElementById('mainBody');
     const searchInput = document.getElementById('searchInput');
-    const searchButton = document.querySelector('.searchButton');
     const newContactForm = document.getElementById('newContactForm');
     const photoId = document.getElementById('photoId');
-    const photoIdDiv = document.getElementById('photoIdDiv');
     const profilePhoto = document.getElementById('profilePhoto');
     const newInformationForm = document.getElementById('newInformationForm');
     const contactsTable = document.getElementById('contactsTable');
     const fileBtn = document.getElementById('fileBtn');
     const addNewContactBtn = document.getElementById('addNewContactBtn');
-    const getStartedText = document.getElementById('getStartedText');
     const loadingDiv = document.getElementById('loadingDiv');
     const getStartedDiv = document.querySelector('.getStartedDiv');
     const alertDiv = document.getElementById('alertDiv');
     const contactProfilePageDiv = document.getElementById('contactProfilePageDiv');
-    const closeDiv = document.getElementById('closeDiv');
     const rightClickOptionsDiv = document.getElementById('rightClickOptionsDiv');
 
     setTimeout(() => {
@@ -30,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3700)
 
     if (localStorage.getItem('allContactsArray')) {
+        newContactForm.style.display = "none";
 
         const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
@@ -120,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (userChoice.className === "createNew") {
+            contactsTable.style.display = "none";
             contactProfilePageDiv.style.display = "none";
             searchInput.style.display = "none";
             newContactForm.style.display = "list-item"; newContactForm.style.listStyleType = "none";
@@ -339,21 +337,34 @@ document.addEventListener('DOMContentLoaded', () => {
     photoId.addEventListener('change', () => {
         const file = photoId.files[0];
 
-        const readFile = new FileReader();
+        if (file.type.startsWith("image/")) {
 
-        readFile.addEventListener('load', () => {
-            const profileData = readFile.result;
+            const readFile = new FileReader();
 
-            if (file.type.startsWith("image/")) {
+            readFile.addEventListener('load', () => {
+                const profileData = readFile.result;
+
                 profilePhoto.style.display = "list-item"; profilePhoto.style.listStyleType = "none";
                 profilePhoto.src = profileData;
 
                 fileBtn.style.display = "none";
-            }
-            else {fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none";}
-           profileURLData =  readFile.result;
-        })
-        readFile.readAsDataURL(file);
+                
+                profileURLData =  readFile.result;
+            });
+            readFile.readAsDataURL(file);
+        }
+
+        else {
+            alertDiv.innerText = "Please Select an Image!";
+            alertDiv.style.display = "block";
+            fileBtn.style.outline = "5px solid crimson";
+            fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; profilePhoto.style.display = "none";
+
+            setTimeout(() => {
+                alertDiv.style.display = "none";
+                fileBtn.style.outline = "none";
+            }, 1300);
+        }
     });
 
     addNewContactBtn.addEventListener('click', (event) => {
@@ -367,61 +378,137 @@ document.addEventListener('DOMContentLoaded', () => {
 
         event.preventDefault();
 
-        for (let i = 0; i < newInformationForm.length-2; i++) {
-            if (newInformationForm[i].value.length < 2) {
-                newInformationForm[i].style.outline = "5px solid crimson";
-            }
-            else {
-                newInformationForm[i].style.outline = "none";
-            }
-        }
+        let count = 0;
 
-        if (name.value.length > 2 && profilePhoto.src.length > 32 && orangeNumber.value.length === 10 && lonestarNumber.value.length === 10 && email.value.length > 10 && location.value.length > 7 && details.value.length > 21 && email.value.endsWith(".com")) {
+        for (let i = 0; i < newInformationForm.length-1; i++) {
+            if (i === 7) {
+                if (profilePhoto.src.length < 33 || profilePhoto.src.includes("  ")) {
+                    profilePhoto.style.outline = "5px solid crimson";
+                    alertDiv.innerText = "Please Select a Profile Photo!";
+                    alertDiv.style.display = "block";
+                    setTimeout(() => {
+                        alertDiv.style.display = "none";
+                    }, 1500);
+                    count +=1;
+                }
+                else {
+                    profilePhoto.style.outline = "none";
+                }
+            }
+
+            else if (i < 7) {
+                if (newInformationForm[i].value.length < 2 || newInformationForm[i].value.includes("  ")) {
+                    count+=1;
+                    newInformationForm[i].style.outline = "5px solid crimson";
+                }
+                else {
+                    newInformationForm[i].style.outline = "none";
+                }
+            }
+        };
+
+        if (count === 1) {
 
             if (orangeNumber.value.startsWith("0776") || orangeNumber.value.startsWith("0770") || orangeNumber.value.startsWith("0779") || orangeNumber.value.startsWith("0778") || orangeNumber.value.startsWith("0775") || orangeNumber.value.startsWith("0777")) {
 
                 if (lonestarNumber.value.startsWith("0880") || lonestarNumber.value.startsWith("0881") || lonestarNumber.value.startsWith("0888") || lonestarNumber.value.startsWith("0886") || lonestarNumber.value.startsWith("0555")) {
-                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+                    
+                    if (lonestarNumber.value.length === 10 && orangeNumber.value.length === 10) {
 
-                    let newId;
+                        if (email.value.includes("@") && email.value.includes(".")) {
 
-                    if (allContactsArray.length > 0) {
-                        newId = allContactsArray[allContactsArray.length-1].id+1;
+                            if (location.value.length > 10) {
+
+                                if (details.value.length > 30) {
+
+                                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+
+                                    let newId;
+
+                                    if (allContactsArray.length > 0) {
+                                        newId = allContactsArray[allContactsArray.length-1].id+1;
+                                    }
+                                    else {
+                                        newId = allContactsArray.length+1;
+                                    }
+
+                                    allContactsArray.push({
+                                        id: newId,
+                                        name: name.value,
+                                        email: email.value,
+                                        orangeNumber: orangeNumber.value,
+                                        lonestarNumber: lonestarNumber.value,
+                                        location: location.value,
+                                        details: details.value,
+                                        profile: profileURLData,
+                                    })
+
+                                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                                    renderContacts();
+
+                                    name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
+
+                                    profile.style.display = "none";
+                                    fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
+
+                                    if (contactsTable.textContent.length > 40) {
+                                        getStartedDiv.style.display = "none";
+                                    }
+
+                                    alertDiv.style.display = "block";
+                                    alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+                                    setTimeout(() => {
+                                        alertDiv.style.display = "none";
+                                    }, 3000);
+                                }
+
+                                else {
+                                    details.style.outline = "5px solid crimson";
+                                    alertDiv.innerText = "Please Check the Length of the Details Field! \nBe more Clear!";
+                                    alertDiv.style.display = "block";
+                    
+                                    setTimeout(() => {
+                                        details.style.outline = "none";
+                                        alertDiv.style.display = "none";
+                                    }, 2200)
+                                }
+                            }
+
+                            else {
+                                location.style.outline = "5px solid crimson";
+                                alertDiv.innerText = "Please Check the Length of the Location Field! \nBe more Clear!";
+                                alertDiv.style.display = "block";
+                
+                                setTimeout(() => {
+                                    location.style.outline = "none";
+                                    alertDiv.style.display = "none";
+                                }, 2200)
+                            }
+                        }
+
+                        else {
+                            email.style.outline = "5px solid crimson";
+                            alertDiv.textContent = "Please Enter a Valid Email Address!";
+                            alertDiv.style.display = "block";
+            
+                            setTimeout(() => {
+                                email.style.outline = "none";
+                                alertDiv.style.display = "none";
+                            }, 2000)
+                        }
                     }
                     else {
-                        newId = allContactsArray.length+1;
+                        lonestarNumber.style.outline = "5px solid crimson"; orangeNumber.style.outline = "5px solid crimson";
+                        alertDiv.innerText = "Please Check the Length of the Orange or Lonestar Phone Numbers!";
+                        alertDiv.style.display = "block";
+
+                        setTimeout(() => {
+                            alertDiv.style.display = "none";
+                        lonestarNumber.style.outline = "none"; orangeNumber.style.outline = "none";
+                        }, 1500);
                     }
-
-                    allContactsArray.push({
-                        id: newId,
-                        name: name.value,
-                        email: email.value,
-                        orangeNumber: orangeNumber.value,
-                        lonestarNumber: lonestarNumber.value,
-                        location: location.value,
-                        details: details.value,
-                        profile: profileURLData,
-                    })
-
-                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
-
-                    renderContacts();
-            
-                    name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
-            
-                    profile.style.display = "none";
-                    fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
-
-                    if (contactsTable.textContent.length > 40) {
-                        getStartedDiv.style.display = "none";
-                    }
-
-                    alertDiv.style.display = "block";
-                    alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
-
-                    setTimeout(() => {
-                        alertDiv.style.display = "none";
-                    }, 3000)
                 }
 
                 else {
@@ -432,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         lonestarNumber.style.outline = "none";
                         alertDiv.style.display = "none";
-                    }, 2500)
+                    }, 2000)
                 }
             }
 
@@ -444,16 +531,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     orangeNumber.style.outline = "none";
                     alertDiv.style.display = "none";
-                }, 2500)
+                }, 2000);
             }
         }
         else {
             alertDiv.style.display = "block";
-            alertDiv.innerText = "Please Enter valid Responds in the Input Fields! \nHints: \n1. Check if your email is correct! \n2. Check the Length of the Details Field \n3. Check if the Orange and Lonestar Numbers are Valid \n4. Contact Photo is Required! \n5. Location, etc...";
+            alertDiv.innerText = "All the Fields are Required! \nPlease Avoid Double Spacing!";
 
             setTimeout(() => {
                 alertDiv.style.display = "none";
-            }, 10000)
+            }, 2500)
         }
     });
 

@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactsTable.innerHTML +=
                 `
                     <tr title="${allContactsArray[i].name}" class="contact">
+                        <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
                         <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
                         <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
                         <td class="locationTd">${allContactsArray[i].location}</td>
@@ -57,10 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         event.preventDefault();
     });
-    
-    document.addEventListener('keyup', (event) => {
-        if (event.keyCode === 13) {return};
-    })
 
     searchInput.addEventListener('keyup', (event) => {
         for (let i = 0; i < contactsTable.children.length; i++) {
@@ -85,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
             contactsTable.innerHTML +=
             `
                 <tr title="${allContactsArray[i].name}" class="contact">
+                    <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
                     <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
                     <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
                     <td class="locationTd">${allContactsArray[i].location}</td>
@@ -92,6 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
             `
         }
     };
+
+    const favoriteCheckBox = document.getElementsByClassName('favoriteCheckBox');
+    const favoriteCheckboxTd = document.getElementsByClassName('favoriteCheckboxTd');
 
     document.addEventListener('click', (event) => {
         const userChoice = event.target;
@@ -140,6 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
         }
 
+        if (userChoice.className === "addToFavorites") {
+
+            for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                favoriteCheckboxTd[i].style.display = "table-cell";
+            }
+
+
+        }
+
         if (userChoice.className === "viewAllContacts") {
             if (contactsTable.innerText.length > 14) {
                 if (screen.width < 890.1) {
@@ -163,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 setTimeout(() => {
                     alertDiv.style.display = "none";
-                }, 5500)
+                }, 5000)
             }
         }
 
@@ -328,6 +338,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
+
+        if (userChoice.className === "favoriteCheckBox") {
+
+            const star = document.createElement('div');
+            star.className = "starSVGDiv";
+            star.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" style="pointer-events: none;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg>';
+            star.style.pointerEvents = "auto";
+
+            userChoice.replaceWith(star);
+
+            console.log("The User has Checked ", userChoice.value);
+        }
+
+        if (userChoice.className === "starSVGDiv") {
+
+            const checkBox = document.createElement('input');
+            checkBox.type = "checkbox"; checkBox.className = "favoriteCheckBox";
+
+            console.log(checkBox);
+            userChoice.replaceWith(checkBox);
+        }
     })
 
     profilePhoto.style.display = "none";
@@ -337,34 +368,32 @@ document.addEventListener('DOMContentLoaded', () => {
     photoId.addEventListener('change', () => {
         const file = photoId.files[0];
 
-        if (file.type.startsWith("image/")) {
+        const readFile = new FileReader();
 
-            const readFile = new FileReader();
-
-            readFile.addEventListener('load', () => {
-                const profileData = readFile.result;
-
+        readFile.addEventListener('load', () => {
+        
+            if (file.type.startsWith("image/")) {
                 profilePhoto.style.display = "list-item"; profilePhoto.style.listStyleType = "none";
-                profilePhoto.src = profileData;
+                profilePhoto.src = readFile.result;
 
                 fileBtn.style.display = "none";
                 
                 profileURLData =  readFile.result;
-            });
-            readFile.readAsDataURL(file);
-        }
+            }
 
-        else {
-            alertDiv.innerText = "Please Select an Image!";
-            alertDiv.style.display = "block";
-            fileBtn.style.outline = "5px solid crimson";
-            fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; profilePhoto.style.display = "none";
+            else {
+                alertDiv.innerText = "Please Select an Image!";
+                alertDiv.style.display = "block";
+                fileBtn.style.outline = "5px solid crimson";
+                fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; profilePhoto.style.display = "none";
 
-            setTimeout(() => {
-                alertDiv.style.display = "none";
-                fileBtn.style.outline = "none";
-            }, 1300);
-        }
+                setTimeout(() => {
+                    alertDiv.style.display = "none";
+                    fileBtn.style.outline = "none";
+                }, 1300);
+            }
+        });
+        readFile.readAsDataURL(file);
     });
 
     addNewContactBtn.addEventListener('click', (event) => {
@@ -415,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (lonestarNumber.value.length === 10 && orangeNumber.value.length === 10) {
 
-                        if (email.value.includes("@") && email.value.includes(".")) {
+                        if (email.value.includes("@") && email.value.includes(".") && email.value.length > 10) {
 
                             if (location.value.length > 10) {
 

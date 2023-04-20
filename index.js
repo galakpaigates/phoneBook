@@ -141,13 +141,41 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
         }
 
+        const createFavoriteButton = document.createElement('button');
+        createFavoriteButton.type = "button"; createFavoriteButton.className = "createFavoriteButton";
+
         if (userChoice.className === "addToFavorites") {
+            document.querySelectorAll('.addToFavorites')[0].disabled = true;
+            document.querySelectorAll('.addToFavorites')[1].disabled = true;
+            createFavoriteButton.style.display = "block";
+            contactsTable.style.display = "table-row-group";
+            newContactForm.style.display = "none";
+            searchInput.style.display = "none";
+            contactProfilePageDiv.style.display = "none";
+
+            contactsTable.insertAdjacentHTML("afterend", 
+            `
+                <button type="button" id="createFavoriteButton"><svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg> Create Favorite <svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></button>
+            `)
 
             for (let i = 0; i < favoriteCheckboxTd.length; i++) {
                 favoriteCheckboxTd[i].style.display = "table-cell";
             }
 
+            const addFavoritesBtn = document.getElementById('createFavoriteButton');
 
+            addFavoritesBtn.addEventListener('click', (event) => {
+                document.querySelectorAll('.addToFavorites')[0].disabled = false;
+                document.querySelectorAll('.addToFavorites')[1].disabled = false;
+
+                setTimeout(() => {
+                    for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                        favoriteCheckboxTd[i].style.display = "none";
+                    }
+    
+                    addFavoritesBtn.style.display = "none";
+                }, 200);
+            })
         }
 
         if (userChoice.className === "viewAllContacts") {
@@ -185,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
             if (userChoice.closest('[title]').title.length > 2) {
+                document.getElementById('createFavoriteButton').style.display = "none";
                 searchInput.style.display = "none";
                 contactsTable.style.display = "none";
                 const title = userChoice.closest('[title]').title;
@@ -275,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
                         setTimeout(() => {
                             editButton.innerText = "Save Changes";
-                        }, 300)
+                        }, 250)
                     }
 
                     if (editButton.innerText === "Save Changes") {
@@ -359,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(checkBox);
             userChoice.replaceWith(checkBox);
         }
-    })
+    });
 
     profilePhoto.style.display = "none";
 

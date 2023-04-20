@@ -456,6 +456,16 @@ button {
     cursor: pointer;
 }
 
+#createFavoriteButton {
+    background-color:#6a6868;
+    color: white;
+    font-weight: bold;
+    border-radius: 7px;
+    padding: -21px 12px 12px 12px;
+    font-size: 17px;
+    margin-top: 2.7vh;
+}
+
 /* Phone CSS Begins Here! */
 @media (max-width: 890px) {
     #menuBar {

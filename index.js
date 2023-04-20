@@ -17,12 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactProfilePageDiv = document.getElementById('contactProfilePageDiv');
     const rightClickOptionsDiv = document.getElementById('rightClickOptionsDiv');
 
+    document.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    });
+
     setTimeout(() => {
         loadingDiv.style.display = "none";
 
         sideBar.style.display = "list-item";
 
         mainBody.style.display = "list-item";
+
+        document.addEventListener('contextmenu', (event) => {
+            rightClickOptionsDiv.style.display = "flex";
+
+            event.preventDefault();
+    });
     }, 3700)
 
     if (localStorage.getItem('allContactsArray')) {
@@ -52,12 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
     }
-
-    document.addEventListener('contextmenu', (event) => {
-        rightClickOptionsDiv.style.display = "flex";
-
-        event.preventDefault();
-    });
 
     searchInput.addEventListener('keyup', (event) => {
         for (let i = 0; i < contactsTable.children.length; i++) {
@@ -99,6 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         rightClickOptionsDiv.style.display = "none";
 
         if (userChoice.className === "searchButton") {
+            document.querySelectorAll('.addToFavorites')[0].disabled = false;
+            document.querySelectorAll('.addToFavorites')[1].disabled = false;
             if (screen.width < 890) {
                 sideBar.style.display = "none"; searchInput.style.marginLeft = "92px"; searchInput.style.marginTop = "-45px";
                 menuBar.style.display = "list-item"; menuBar.style.listStyleType = "none"; menuButton.style.display = "list-item";
@@ -118,6 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (userChoice.className === "createNew") {
+            document.querySelectorAll('.addToFavorites')[0].disabled = false;
+            document.querySelectorAll('.addToFavorites')[1].disabled = false;
+
+            for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                favoriteCheckboxTd[i].style.display = "none";
+            }
+            document.getElementById('createFavoriteButton').style.display = "none";
             contactsTable.style.display = "none";
             contactProfilePageDiv.style.display = "none";
             searchInput.style.display = "none";
@@ -141,45 +154,63 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
         }
 
-        const createFavoriteButton = document.createElement('button');
-        createFavoriteButton.type = "button"; createFavoriteButton.className = "createFavoriteButton";
-
         if (userChoice.className === "addToFavorites") {
-            document.querySelectorAll('.addToFavorites')[0].disabled = true;
-            document.querySelectorAll('.addToFavorites')[1].disabled = true;
-            createFavoriteButton.style.display = "block";
-            contactsTable.style.display = "table-row-group";
-            newContactForm.style.display = "none";
-            searchInput.style.display = "none";
-            contactProfilePageDiv.style.display = "none";
 
-            contactsTable.insertAdjacentHTML("afterend", 
-            `
-                <button type="button" id="createFavoriteButton"><svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg> Create Favorite <svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></button>
-            `)
+            if (contactsTable.textContent.length > 40) {
 
-            for (let i = 0; i < favoriteCheckboxTd.length; i++) {
-                favoriteCheckboxTd[i].style.display = "table-cell";
+                const createFavoriteButton = document.createElement('button');
+                createFavoriteButton.type = "button"; createFavoriteButton.className = "createFavoriteButton";
+
+                document.querySelectorAll('.addToFavorites')[0].disabled = true;
+                document.querySelectorAll('.addToFavorites')[1].disabled = true;
+
+                contactsTable.style.display = "table-row-group";
+                newContactForm.style.display = "none";
+                searchInput.style.display = "none";
+                contactProfilePageDiv.style.display = "none";
+    
+                contactsTable.insertAdjacentHTML("afterend", 
+                `
+                    <button type="button" id="createFavoriteButton"><svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg> Create Favorite <svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></button>
+                `)
+
+                createFavoriteButton.style.display = "block";
+    
+                for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                    favoriteCheckboxTd[i].style.display = "table-cell";
+                }
+    
+                const addFavoritesBtn = document.getElementById('createFavoriteButton');
+    
+                addFavoritesBtn.addEventListener('click', (event) => {
+                    document.querySelectorAll('.addToFavorites')[0].disabled = false;
+                    document.querySelectorAll('.addToFavorites')[1].disabled = false;
+    
+                    setTimeout(() => {
+                        for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                            favoriteCheckboxTd[i].style.display = "none";
+                        }
+        
+                        addFavoritesBtn.style.display = "none";
+                    }, 200);
+                });
             }
 
-            const addFavoritesBtn = document.getElementById('createFavoriteButton');
-
-            addFavoritesBtn.addEventListener('click', (event) => {
-                document.querySelectorAll('.addToFavorites')[0].disabled = false;
-                document.querySelectorAll('.addToFavorites')[1].disabled = false;
+            else {
+                alertDiv.innerText = "You don't have any Contacts yet! \nClick the 'Create New' Button to get Started!";
+                alertDiv.style.display = "block";
 
                 setTimeout(() => {
-                    for (let i = 0; i < favoriteCheckboxTd.length; i++) {
-                        favoriteCheckboxTd[i].style.display = "none";
-                    }
-    
-                    addFavoritesBtn.style.display = "none";
-                }, 200);
-            })
+                    alertDiv.style.display = "none";
+                }, 3000);
+            }
         }
 
         if (userChoice.className === "viewAllContacts") {
-            if (contactsTable.innerText.length > 14) {
+            document.querySelectorAll('.addToFavorites')[0].disabled = false;
+            document.querySelectorAll('.addToFavorites')[1].disabled = false;
+
+            if (contactsTable.innerText.length > 40) {
                 if (screen.width < 890.1) {
                     sideBar.style.display = "none";
                     menuBar.style.display = "list-item"; menuBar.style.listStyleType = "none";
@@ -191,9 +222,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 
                 newContactForm.style.display = "none";
+                searchInput.style.display = "none";
                 contactProfilePageDiv.style.display = "none";
                 mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
-                contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none";
+                contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none"; contactsTable.style.marginTop = "12px";
             }
             else {
                 alertDiv.style.display = "block";
@@ -213,7 +245,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
             if (userChoice.closest('[title]').title.length > 2) {
-                document.getElementById('createFavoriteButton').style.display = "none";
                 searchInput.style.display = "none";
                 contactsTable.style.display = "none";
                 const title = userChoice.closest('[title]').title;
@@ -376,16 +407,12 @@ document.addEventListener('DOMContentLoaded', () => {
             star.style.pointerEvents = "auto";
 
             userChoice.replaceWith(star);
-
-            console.log("The User has Checked ", userChoice.value);
         }
 
         if (userChoice.className === "starSVGDiv") {
 
             const checkBox = document.createElement('input');
             checkBox.type = "checkbox"; checkBox.className = "favoriteCheckBox";
-
-            console.log(checkBox);
             userChoice.replaceWith(checkBox);
         }
     });

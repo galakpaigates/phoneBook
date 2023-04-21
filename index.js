@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             event.preventDefault();
     });
-    }, 3700)
+    }, 700)
 
     if (localStorage.getItem('allContactsArray')) {
         newContactForm.style.display = "none";
@@ -106,9 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
             document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
 
-            console.log(document.querySelectorAll('.addToFavorites')[0], "First");
-            console.log(document.querySelectorAll('.addToFavorites')[1], "Second");
-
             if (screen.width < 890) {
                 sideBar.style.display = "none"; searchInput.style.marginLeft = "92px"; searchInput.style.marginTop = "-45px";
                 menuBar.style.display = "list-item"; menuBar.style.listStyleType = "none"; menuButton.style.display = "list-item";
@@ -130,9 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userChoice.className === "createNew") {
             document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
             document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
-
-            console.log(document.querySelectorAll('.addToFavorites')[0], "First");
-            console.log(document.querySelectorAll('.addToFavorites')[1], "Second");
 
 
             for (let i = 0; i < favoriteCheckboxTd.length; i++) {
@@ -169,25 +163,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userChoice.className === "addToFavorites") {
 
             if (contactsTable.textContent.length > 40) {
+                newContactForm.style.display = "none";
+                searchInput.style.display = "none";
+                mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
+                contactsTable.style.display = "table-row-group";
+
+                if (screen.width < 890) {
+                    sideBar.style.display = "none";
+                    menuBar.style.display = "list-item"; menuButton.style.display = "list-item"; menuBar.style.listStyleType = "none"; menuButton.style.listStyleType = "none";
+                }
 
                 const createFavoriteButton = document.createElement('button');
                 createFavoriteButton.type = "button"; createFavoriteButton.className = "createFavoriteButton";
 
                 document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "none";
                 document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "none";
-
-                console.log(document.querySelectorAll('.addToFavorites')[0], "First");
-                console.log(document.querySelectorAll('.addToFavorites')[1], "Second");
-
-                contactsTable.style.display = "table-row-group";
-                newContactForm.style.display = "none";
-                searchInput.style.display = "none";
-                contactProfilePageDiv.style.display = "none";
     
-                contactsTable.insertAdjacentHTML("afterend", 
-                `
-                    <button type="button" id="createFavoriteButton"><svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg> Create Favorite <svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></button>
-                `)
+                if (!document.getElementById("createFavoriteButton") || document.getElementById('createFavoriteButton').style.display == "none") {
+                    contactsTable.insertAdjacentHTML("afterend", 
+                    `
+                        <button type="button" id="createFavoriteButton"><svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg> Create Favorite <svg xmlns="http://www.w3.org/2000/svg" style="height: 17px;" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></button>
+                    `)
+                }
 
                 createFavoriteButton.style.display = "block";
     
@@ -201,8 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
                     document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
 
-                    console.log(document.querySelectorAll('.addToFavorites')[0], "First");
-                    console.log(document.querySelectorAll('.addToFavorites')[1], "Second");
+                    alertDiv.innerText = "Contacts Added to Favorites!";
+                    alertDiv.style.display = "block";
     
                     setTimeout(() => {
                         for (let i = 0; i < favoriteCheckboxTd.length; i++) {
@@ -210,7 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
         
                         addFavoritesBtn.style.display = "none";
-                    }, 200);
+                    }, 400);
+
+                    setTimeout(() => {
+                        alertDiv.style.display = "none";
+                    }, 1200);
                 });
             }
 
@@ -227,9 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userChoice.className === "viewAllContacts") {
             document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
             document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
-
-            console.log(document.querySelectorAll('.addToFavorites')[0], "First");
-            console.log(document.querySelectorAll('.addToFavorites')[1], "Second");
 
             if (contactsTable.innerText.length > 40) {
                 if (screen.width < 890.1) {

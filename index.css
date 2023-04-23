@@ -65,7 +65,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to left, #56a1bf, #c2bfbf);
+    background-color: #d4d0d0;
     opacity: 0.4;
     z-index: -1;
 }
@@ -291,7 +291,7 @@ button {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 2px solid cadetblue;
     margin-left: 5px;
     margin-top: 4px;
     overflow: auto;
@@ -302,22 +302,21 @@ button {
     animation: fallDown 0.8s ease-out forwards;
     margin-bottom: 21px;
     list-style-type: none;
+    box-shadow: 0px 0px 12px #c3bebe;
+    border-radius: 12px;
 }
 @keyframes fallDown {
     0% {transform: translateY(-350px); opacity: 0.3;}
 }
 
 #contactsTable tr {
-    box-shadow: 1px 1px 1px white;
-    color: white;
     font-weight: bold;
     padding: 7px;
-    background-color: cadetblue;
     width: 100%;
 }
 
 #contactsTable tr td {
-    box-shadow: -2px -1px 1px white;
+    box-shadow: 0px 1px 1px cadetblue;
     width: 40px;
     white-space: nowrap;
     padding: 0px 10px 0px 10px;
@@ -336,7 +335,7 @@ button {
 #contactsTable tr:active {
     opacity: 0.5;
 }
-
+#contactsTable tr td svg {float: right; height: 25px; width: 30px;}
 .detailsTd {
     width: 10vw;
     white-space: nowrap;
@@ -378,24 +377,19 @@ button {
     font-weight: 1000;
 }
 
-#contactProfilePageDiv::before {
-    opacity: 0.8;
-    color: khaki;
-    z-index: -1;
-    content: "";
-    position: fixed;
-}
-
 #contactProfilePageDiv span {
     text-decoration: underline;
 }
 
 #currentProfilePhoto {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 120px;
     overflow: auto;
     object-fit: cover;
-    border-radius: 15%;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 
 #closeDiv {
@@ -454,6 +448,7 @@ button {
     color: yellow;
     fill: yellow;
     cursor: pointer;
+    height: 17px;
 }
 
 #createFavoriteButton {

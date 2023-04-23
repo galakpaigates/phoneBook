@@ -49,9 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <tr title="${allContactsArray[i].name}" class="contact">
                         <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
                         <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
-                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
+                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
                         <td class="locationTd">${allContactsArray[i].location}</td>
-                        <td class="detailsTd">${allContactsArray[i].details}</td>
                     </tr>
                 `
             }
@@ -88,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <tr title="${allContactsArray[i].name}" class="contact">
                     <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
                     <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
-                    <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber} <br> ${allContactsArray[i].email}</td>
+                    <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
                     <td class="locationTd">${allContactsArray[i].location}</td>
                 </tr>
             `
@@ -97,6 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const favoriteCheckBox = document.getElementsByClassName('favoriteCheckBox');
     const favoriteCheckboxTd = document.getElementsByClassName('favoriteCheckboxTd');
+
+    let num = 0;
+    var checkedContactsArray = [];
 
     document.addEventListener('click', (event) => {
         const userChoice = event.target;
@@ -113,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             searchInput.style.display = "list-item"; searchInput.style.width = "60vw";
 
             newContactForm.style.display = "none";
+            contactProfilePageDiv.style.display = "none";
 
             if (screen.width > 890) {
                 mainBody.style.marginTop = "100px";
@@ -125,6 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (userChoice.className === "createNew") {
+            if (document.getElementById("createFavoriteButton")) {
+                document.getElementById('createFavoriteButton').style.display = "none";
+            }
+
             document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
             document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
 
@@ -160,6 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
         }
 
+        if (userChoice.className === "favoriteCheckBox") {
+            checkedContactsArray.push(
+                {[num+=1]: userChoice.value},
+            );
+        }
+
         if (userChoice.className === "addToFavorites") {
 
             if (contactsTable.textContent.length > 40) {
@@ -167,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.style.display = "none";
                 mainBody.style.display = "list-item"; mainBody.style.listStyleType = "none"; mainBody.style.marginTop = "12px";
                 contactsTable.style.display = "table-row-group";
+                contactProfilePageDiv.style.display = "none";
 
                 if (screen.width < 890) {
                     sideBar.style.display = "none";
@@ -198,6 +212,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
                     document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
 
+                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+                    for (let i = 0; i < checkedContactsArray.length; i++) {
+
+                        const currentFavoriteName = checkedContactsArray[i][i+1];
+                        const currentFavorite = allContactsArray.findIndex((name) => name.name === currentFavoriteName);
+                        allContactsArray[currentFavorite].lonestarNumber += '<svg xmlns="http://www.w3.org/2000/svg" class="starSVG" height="48" viewBox="0 96 960 960" width="48"><path d="m233 976 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg>';
+                    }
+                    checkedContactsArray = [];
+
+                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                    renderContacts();
+
                     alertDiv.innerText = "Contacts Added to Favorites!";
                     alertDiv.style.display = "block";
     
@@ -207,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
         
                         addFavoritesBtn.style.display = "none";
-                    }, 400);
+                    }, 700);
 
                     setTimeout(() => {
                         alertDiv.style.display = "none";
@@ -264,6 +291,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
             if (userChoice.closest('[title]').title.length > 2) {
+                if (document.getElementById("createFavoriteButton")) {
+                    document.getElementById('createFavoriteButton').style.display = "none";
+                }
+
+                document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
+                document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
+
                 searchInput.style.display = "none";
                 contactsTable.style.display = "none";
                 const title = userChoice.closest('[title]').title;
@@ -427,13 +461,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             userChoice.replaceWith(star);
         }
-
-        if (userChoice.className === "starSVGDiv") {
-
-            const checkBox = document.createElement('input');
-            checkBox.type = "checkbox"; checkBox.className = "favoriteCheckBox";
-            userChoice.replaceWith(checkBox);
-        }
     });
 
     profilePhoto.style.display = "none";
@@ -523,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             if (location.value.length > 10) {
 
-                                if (details.value.length > 30) {
+                                if (details.value.length > 10) {
 
                                     const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 

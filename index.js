@@ -536,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (location.value.length > 10) {
 
                                 if (details.value.length > 10) {
-                                    console.log(profilePhoto.src.length)
+
                                     if (profilePhoto.src.length > 100) {
 
                                         const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));

@@ -512,22 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let count = 0;
 
         for (let i = 0; i < newInformationForm.length-1; i++) {
-            if (i === 7) {
-                if (profilePhoto.src.length < 33 || profilePhoto.src.includes("  ")) {
-                    profilePhoto.style.outline = "5px solid crimson";
-                    alertDiv.innerText = "Please Select a Profile Photo!";
-                    alertDiv.style.display = "block";
-                    setTimeout(() => {
-                        alertDiv.style.display = "none";
-                    }, 1500);
-                    count +=1;
-                }
-                else {
-                    profilePhoto.style.outline = "none";
-                }
-            }
-
-            else if (i < 7) {
+            if (i < 7) {
                 if (newInformationForm[i].value.length < 2 || newInformationForm[i].value.includes("  ")) {
                     count+=1;
                     newInformationForm[i].style.outline = "5px solid crimson";
@@ -550,49 +535,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             if (location.value.length > 10) {
 
-                                if (details.value.length > 10) {
+                                if (details.value.length > 10) {console.log(profilePhoto.src.length)
 
-                                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+                                    if (profilePhoto.src.length > 32) {
 
-                                    let newId;
+                                        const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
-                                    if (allContactsArray.length > 0) {
-                                        newId = allContactsArray[allContactsArray.length-1].id+1;
+                                        let newId;
+
+                                        if (allContactsArray.length > 0) {
+                                            newId = allContactsArray[allContactsArray.length-1].id+1;
+                                        }
+                                        else {
+                                            newId = allContactsArray.length+1;
+                                        }
+
+                                        allContactsArray.push({
+                                            id: newId,
+                                            name: name.value,
+                                            email: email.value,
+                                            orangeNumber: orangeNumber.value,
+                                            lonestarNumber: lonestarNumber.value,
+                                            location: location.value,
+                                            details: details.value,
+                                            profile: profileURLData,
+                                        })
+
+                                        localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                                        renderContacts();
+
+                                        name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
+
+                                        profile.style.display = "none";
+                                        fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
+
+                                        if (contactsTable.textContent.length > 40) {
+                                            getStartedDiv.style.display = "none";
+                                        }
+
+                                        alertDiv.style.display = "block";
+                                        alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+                                        setTimeout(() => {
+                                            alertDiv.style.display = "none";
+                                        }, 3000);
                                     }
+
                                     else {
-                                        newId = allContactsArray.length+1;
+                                        alertDiv.innerText = "Please Select a Profile Photo for this Contact!";
+                                        alertDiv.style.display = "block";
+                                        profilePhoto.style.outline = "5px solid crimson";
+
+                                        setTimeout(() => {
+                                            alertDiv.style.display = "none";
+                                        }, 3000);
                                     }
-
-                                    allContactsArray.push({
-                                        id: newId,
-                                        name: name.value,
-                                        email: email.value,
-                                        orangeNumber: orangeNumber.value,
-                                        lonestarNumber: lonestarNumber.value,
-                                        location: location.value,
-                                        details: details.value,
-                                        profile: profileURLData,
-                                    })
-
-                                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
-
-                                    renderContacts();
-
-                                    name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
-
-                                    profile.style.display = "none";
-                                    fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
-
-                                    if (contactsTable.textContent.length > 40) {
-                                        getStartedDiv.style.display = "none";
-                                    }
-
-                                    alertDiv.style.display = "block";
-                                    alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
-
-                                    setTimeout(() => {
-                                        alertDiv.style.display = "none";
-                                    }, 3000);
                                 }
 
                                 else {

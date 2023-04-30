@@ -379,6 +379,7 @@ button {
 
 #contactProfilePageDiv span {
     text-decoration: underline;
+    display: block;
 }
 
 #currentProfilePhoto {
@@ -461,6 +462,18 @@ button {
     margin-top: 2.7vh;
 }
 
+.callBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 10px 5px 10px; 
+    display: inline-block;
+}
+
+#contactOrangeNumberH3, 
+#contactLonestarNumberH3 {
+    display: inline-block;
+}
+
 /* Phone CSS Begins Here! */
 @media (max-width: 890px) {
     #menuBar {
@@ -535,6 +548,7 @@ button {
 
     #contactProfilePageDiv span {
         text-decoration: underline;
+        display: block;
     }
 
     #currentProfilePhoto {
@@ -565,7 +579,7 @@ button {
     }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 340px) {
     .profilePhotoTd {
         display: none;
     }

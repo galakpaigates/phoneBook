@@ -187,6 +187,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     menuBar.style.display = "list-item"; menuButton.style.display = "list-item"; menuBar.style.listStyleType = "none"; menuButton.style.listStyleType = "none";
                 }
 
+                if (screen.width < 393) {
+                    for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                        document.querySelectorAll('.profilePhotoTd')[i].style.display = "none";
+                    }
+                }
+                else {
+                    for (let i = 0; i < favoriteCheckboxTd.length; i++) {
+                        document.querySelectorAll('.profilePhotoTd')[i].style.display = "table-cell";
+                    }
+                }
+
                 const createFavoriteButton = document.createElement('button');
                 createFavoriteButton.type = "button"; createFavoriteButton.className = "createFavoriteButton";
 
@@ -257,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
 
             if (contactsTable.innerText.length > 40) {
+
                 if (screen.width < 890.1) {
                     sideBar.style.display = "none";
                     menuBar.style.display = "list-item"; menuBar.style.listStyleType = "none";
@@ -308,6 +320,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 contactProfilePageDiv.style.display = "block";
 
+                var onlyNumber = "";
+
+                for (let i = 0; i < 10; i++) {
+                    onlyNumber += result[0].lonestarNumber[i];
+                }
+
                 contactProfilePageDiv.innerHTML = 
                 `
                     <img src="${result[0].profile}" id="currentProfilePhoto">
@@ -318,12 +336,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <span>Orange Number</span>
 
-                    <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3> <a href='tel:${orangeNumber}'><button style="background-color: #4CAF50; color: white; padding: 5px 10px 5px 10px; display: inline-block;">Call</button></a>
+                    <a href='tel:${result[0].orangeNumber}'><button class="callBtn">Call</button></a> <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3>
 
                     <span>Lonestar Number</span>
 
-                    <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3> <a href='tel:${lonestarNumber}'><button style="background-color: #4CAF50; color: white; padding: 5px 10px 5px 10px; display: inline-block;">Call</button></a>
-
+                    <a href='tel:${onlyNumber}'><button class="callBtn">Call</button></a> <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3>
+                    
                     <span>Email Address</span>
 
                     <h3 id="contactEmailH3">${result[0].email}</h3>
@@ -525,142 +543,130 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (count === 1) {
 
-            if (orangeNumber.value.startsWith("0776") || orangeNumber.value.startsWith("0770") || orangeNumber.value.startsWith("0779") || orangeNumber.value.startsWith("0778") || orangeNumber.value.startsWith("0775") || orangeNumber.value.startsWith("0777")) {
+            if (orangeNumber.value.startsWith('+') && lonestarNumber.value.startsWith('+')) {
 
-                if (lonestarNumber.value.startsWith("0880") || lonestarNumber.value.startsWith("0881") || lonestarNumber.value.startsWith("0888") || lonestarNumber.value.startsWith("0886") || lonestarNumber.value.startsWith("0555")) {
-                    
-                    if (lonestarNumber.value.length === 10 && orangeNumber.value.length === 10) {
+                if (lonestarNumber.value.length > 9 && orangeNumber.value.length > 9) {
 
-                        if (email.value.includes("@") && email.value.includes(".") && email.value.length > 10) {
+                    if (email.value.includes("@") && email.value.includes(".") && email.value.length > 10) {
 
-                            if (location.value.length > 10) {
+                        if (location.value.length > 10) {
 
-                                if (details.value.length > 10) {
+                            if (details.value.length > 10) {
 
-                                    if (profilePhoto.src.length > 100) {
+                                if (profilePhoto.src.length > 100) {
 
-                                        const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+                                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
-                                        let newId;
+                                    let newId;
 
-                                        if (allContactsArray.length > 0) {
-                                            newId = allContactsArray[allContactsArray.length-1].id+1;
-                                        }
-                                        else {
-                                            newId = allContactsArray.length+1;
-                                        }
-
-                                        allContactsArray.push({
-                                            id: newId,
-                                            name: name.value,
-                                            email: email.value,
-                                            orangeNumber: orangeNumber.value,
-                                            lonestarNumber: lonestarNumber.value,
-                                            location: location.value,
-                                            details: details.value,
-                                            profile: profileURLData,
-                                        })
-
-                                        localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
-
-                                        renderContacts();
-
-                                        name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
-
-                                        profile.style.display = "none";
-                                        fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
-
-                                        if (contactsTable.textContent.length > 40) {
-                                            getStartedDiv.style.display = "none";
-                                        }
-
-                                        alertDiv.style.display = "block";
-                                        alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
-
-                                        setTimeout(() => {
-                                            alertDiv.style.display = "none";
-                                        }, 3000);
+                                    if (allContactsArray.length > 0) {
+                                        newId = allContactsArray[allContactsArray.length-1].id+1;
                                     }
-
                                     else {
-                                        alertDiv.innerText = "Please Select a Profile Photo for this Contact!";
-                                        alertDiv.style.display = "block";
-                                        profilePhoto.style.outline = "5px solid crimson";
-
-                                        setTimeout(() => {
-                                            alertDiv.style.display = "none";
-                                        }, 3000);
+                                        newId = allContactsArray.length+1;
                                     }
+
+                                    allContactsArray.push({
+                                        id: newId,
+                                        name: name.value,
+                                        email: email.value,
+                                        orangeNumber: orangeNumber.value,
+                                        lonestarNumber: lonestarNumber.value,
+                                        location: location.value,
+                                        details: details.value,
+                                        profile: profileURLData,
+                                    })
+
+                                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                                    renderContacts();
+
+                                    name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
+
+                                    profile.style.display = "none";
+                                    fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
+
+                                    if (contactsTable.textContent.length > 40) {
+                                        getStartedDiv.style.display = "none";
+                                    }
+
+                                    alertDiv.style.display = "block";
+                                    alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+                                    setTimeout(() => {
+                                        alertDiv.style.display = "none";
+                                    }, 3000);
                                 }
 
                                 else {
-                                    details.style.outline = "5px solid crimson";
-                                    alertDiv.innerText = "Please Check the Length of the Details Field! \nBe more Clear!";
+                                    alertDiv.innerText = "Please Select a Profile Photo for this Contact!";
                                     alertDiv.style.display = "block";
-                    
+                                    profilePhoto.style.outline = "5px solid crimson";
+
                                     setTimeout(() => {
-                                        details.style.outline = "none";
                                         alertDiv.style.display = "none";
-                                    }, 2200)
+                                    }, 3000);
                                 }
                             }
 
                             else {
-                                location.style.outline = "5px solid crimson";
-                                alertDiv.innerText = "Please Check the Length of the Location Field! \nBe more Clear!";
+                                details.style.outline = "5px solid crimson";
+                                alertDiv.innerText = "Please Check the Length of the Details Field! \nBe more Clear!";
                                 alertDiv.style.display = "block";
                 
                                 setTimeout(() => {
-                                    location.style.outline = "none";
+                                    details.style.outline = "none";
                                     alertDiv.style.display = "none";
                                 }, 2200)
                             }
                         }
 
                         else {
-                            email.style.outline = "5px solid crimson";
-                            alertDiv.textContent = "Please Enter a Valid Email Address!";
+                            location.style.outline = "5px solid crimson";
+                            alertDiv.innerText = "Please Check the Length of the Location Field! \nBe more Clear!";
                             alertDiv.style.display = "block";
             
                             setTimeout(() => {
-                                email.style.outline = "none";
+                                location.style.outline = "none";
                                 alertDiv.style.display = "none";
-                            }, 2000)
+                            }, 2200)
                         }
                     }
-                    else {
-                        lonestarNumber.style.outline = "5px solid crimson"; orangeNumber.style.outline = "5px solid crimson";
-                        alertDiv.innerText = "Please Check the Length of the Orange or Lonestar Phone Numbers!";
-                        alertDiv.style.display = "block";
 
+                    else {
+                        email.style.outline = "5px solid crimson";
+                        alertDiv.textContent = "Please Enter a Valid Email Address!";
+                        alertDiv.style.display = "block";
+        
                         setTimeout(() => {
+                            email.style.outline = "none";
                             alertDiv.style.display = "none";
-                        lonestarNumber.style.outline = "none"; orangeNumber.style.outline = "none";
-                        }, 1500);
+                        }, 2000)
                     }
                 }
-
                 else {
-                    lonestarNumber.style.outline = "5px solid crimson";
-                    alertDiv.textContent = "Please Input a valid Lonestar Phone Number!";
+                    lonestarNumber.style.outline = "5px solid crimson"; orangeNumber.style.outline = "5px solid crimson";
+                    alertDiv.innerText = "Please Check the Length of the Orange or Lonestar Phone Numbers!";
                     alertDiv.style.display = "block";
-    
+
                     setTimeout(() => {
-                        lonestarNumber.style.outline = "none";
                         alertDiv.style.display = "none";
-                    }, 2000)
+                    lonestarNumber.style.outline = "none"; orangeNumber.style.outline = "none";
+                    }, 1500);
                 }
             }
 
             else {
                 orangeNumber.style.outline = "5px solid crimson";
-                alertDiv.textContent = "Please Input a valid Orange Phone Number!";
+                lonestarNumber.style.outline = "5px solid crimson";
+                alertDiv.innerText = "Please Start with the Country Code! \nExample: +231775326934 or +231555943559";
                 alertDiv.style.display = "block";
 
                 setTimeout(() => {
                     orangeNumber.style.outline = "none";
+                    lonestarNumber.style.outline = "none";
                     alertDiv.style.display = "none";
-                }, 2000);
+                }, 4000);
             }
         }
         else {
@@ -678,5 +684,10 @@ document.addEventListener('DOMContentLoaded', () => {
         mainBody.style.display = "none";
         newContactForm.style.display = "none";
         searchInput.style.display = "none";
+
+        if (screen.width < 890) {
+            document.querySelectorAll('.addToFavorites')[0].style.pointerEvents = "auto";
+            document.querySelectorAll('.addToFavorites')[1].style.pointerEvents = "auto";
+        }
     });
 });

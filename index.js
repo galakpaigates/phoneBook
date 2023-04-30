@@ -318,11 +318,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     <span>Orange Number</span>
 
-                    <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3> <button style="background-color: #4CAF50; color: white; padding: 5px 10px 5px 10px;" onclick="location.href="tel:${orangeNumber}">Call</button>
+                    <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3> <button style="background-color: #4CAF50; color: white; padding: 5px 10px 5px 10px;" onclick="location.href='tel:${orangeNumber}'">Call</button>
 
                     <span>Lonestar Number</span>
 
-                    <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3> <button style="background-color: #4CAF50; color: white; padding: 5px 10px 5px 10px;" onclick="location.href="tel:${lonestarNumber}">Call</button>
+                    <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3> <button style="background-color: #4CAF50; color: white; padding: 5px 10px 5px 10px;" onclick="location.href='tel:${lonestarNumber}'">Call</button>
 
                     <span>Email Address</span>
 

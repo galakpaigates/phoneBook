@@ -44,15 +44,32 @@ document.addEventListener('DOMContentLoaded', () => {
             getStartedDiv.style.display = "none";
 
             for (let i = 0; i < allContactsArray.length; i++) {
-                contactsTable.innerHTML +=
-                `
-                    <tr title="${allContactsArray[i].name}" class="contact">
-                        <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
-                        <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
-                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
-                        <td class="locationTd">${allContactsArray[i].location}</td>
-                    </tr>
-                `
+
+                if (allContactsArray[i].profile) {
+
+                    contactsTable.innerHTML +=
+                    `
+                        <tr title="${allContactsArray[i].name}" class="contact">
+                            <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
+                            <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
+                            <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
+                            <td class="locationTd">${allContactsArray[i].location}</td>
+                        </tr>
+                    `
+                }
+
+                else {
+
+                    contactsTable.innerHTML +=
+                    `
+                        <tr title="${allContactsArray[i].name}" class="contact">
+                            <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
+                            <td class="profilePhotoTd"><img src="./src/img/noProfilePhoto.png" class="contactsPhoto"></td>
+                            <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
+                            <td class="locationTd">${allContactsArray[i].location}</td>
+                        </tr>
+                    `
+                }
             }
         }
     }
@@ -82,15 +99,32 @@ document.addEventListener('DOMContentLoaded', () => {
         contactsTable.innerHTML = "";
         
         for (let i = 0; i < allContactsArray.length; i++) {
-            contactsTable.innerHTML +=
-            `
-                <tr title="${allContactsArray[i].name}" class="contact">
-                    <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
-                    <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
-                    <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
-                    <td class="locationTd">${allContactsArray[i].location}</td>
-                </tr>
-            `
+
+            if (allContactsArray[i].profile) {
+
+                contactsTable.innerHTML +=
+                `
+                    <tr title="${allContactsArray[i].name}" class="contact">
+                        <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
+                        <td class="profilePhotoTd"><img src="${allContactsArray[i].profile}" class="contactsPhoto"></td>
+                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
+                        <td class="locationTd">${allContactsArray[i].location}</td>
+                    </tr>
+                `
+            }
+
+            else {
+
+                contactsTable.innerHTML +=
+                `
+                    <tr title="${allContactsArray[i].name}" class="contact">
+                        <td class="favoriteCheckboxTd"><input type="checkbox" value="${allContactsArray[i].name}" class="favoriteCheckBox"></td>
+                        <td class="profilePhotoTd"><img src="./src/img/noProfilePhoto.png" class="contactsPhoto"></td>
+                        <td class="contactDetailsTd"><h3>${allContactsArray[i].name}</h3> ${allContactsArray[i].orangeNumber} | ${allContactsArray[i].lonestarNumber}</td>
+                        <td class="locationTd">${allContactsArray[i].location}</td>
+                    </tr>
+                `
+            }
         }
     };
 
@@ -326,40 +360,79 @@ document.addEventListener('DOMContentLoaded', () => {
                     onlyNumber += result[0].lonestarNumber[i];
                 }
 
-                contactProfilePageDiv.innerHTML = 
-                `
-                    <img src="${result[0].profile}" id="currentProfilePhoto">
+                if (result[0].profile) {
+                    contactProfilePageDiv.innerHTML = 
+                    `
+                        <img src="${result[0].profile}" id="currentProfilePhoto">
 
-                    <div id="closeDiv">x</div>
+                        <div id="closeDiv">x</div>
 
-                    <h2 id="contactNameH2">${result[0].name}</h2>
+                        <h2 id="contactNameH2">${result[0].name}</h2>
 
-                    <span>Orange Number</span>
+                        <span>Orange Number</span>
 
-                    <a href='tel:${result[0].orangeNumber}'><button class="callBtn">Call</button></a> <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3>
+                        <a href='tel:${result[0].orangeNumber}'><button class="callBtn">Call</button></a> <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3>
 
-                    <span>Lonestar Number</span>
+                        <span>Lonestar Number</span>
 
-                    <a href='tel:${onlyNumber}'><button class="callBtn">Call</button></a> <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3>
-                    
-                    <span>Email Address</span>
+                        <a href='tel:${onlyNumber}'><button class="callBtn">Call</button></a> <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3>
+                        
+                        <span>Email Address</span>
 
-                    <h3 id="contactEmailH3">${result[0].email}</h3>
+                        <h3 id="contactEmailH3">${result[0].email}</h3>
 
-                    <span>Location</span>
+                        <span>Location</span>
 
-                    <h3 id="contactLocationH3">${result[0].location}</h3>
+                        <h3 id="contactLocationH3">${result[0].location}</h3>
 
-                    <span>Contact's Details</span>
+                        <span>Contact's Details</span>
 
-                    <h3 id="contactDetailsH3">${result[0].details}</h3>
+                        <h3 id="contactDetailsH3">${result[0].details}</h3>
 
-                    <hr>
+                        <hr>
 
-                    <button id="editButton">Edit</button>
+                        <button id="editButton">Edit</button>
 
-                    <button id="deleteButton">Delete</button>
-                `
+                        <button id="deleteButton">Delete</button>
+                    `
+                }
+
+                else {
+                    contactProfilePageDiv.innerHTML = 
+                    `
+                        <img src="./src/img/noProfilePhoto.png" id="currentProfilePhoto">
+
+                        <div id="closeDiv">x</div>
+
+                        <h2 id="contactNameH2">${result[0].name}</h2>
+
+                        <span>Orange Number</span>
+
+                        <a href='tel:${result[0].orangeNumber}'><button class="callBtn">Call</button></a> <h3 id="contactOrangeNumberH3">${result[0].orangeNumber}</h3>
+
+                        <span>Lonestar Number</span>
+
+                        <a href='tel:${onlyNumber}'><button class="callBtn">Call</button></a> <h3 id="contactLonestarNumberH3">${result[0].lonestarNumber}</h3>
+                        
+                        <span>Email Address</span>
+
+                        <h3 id="contactEmailH3">${result[0].email}</h3>
+
+                        <span>Location</span>
+
+                        <h3 id="contactLocationH3">${result[0].location}</h3>
+
+                        <span>Contact's Details</span>
+
+                        <h3 id="contactDetailsH3">${result[0].details}</h3>
+
+                        <hr>
+
+                        <button id="editButton">Edit</button>
+
+                        <button id="deleteButton">Delete</button>
+                    `
+                }
 
                 const editButton = document.getElementById('editButton');
                 const deleteButton = document.getElementById('deleteButton');
@@ -553,60 +626,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             if (details.value.length > 10) {
 
-                                if (profilePhoto.src.length > 100) {
+                                const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
 
-                                    const allContactsArray = JSON.parse(localStorage.getItem('allContactsArray'));
+                                let newId;
 
-                                    let newId;
-
-                                    if (allContactsArray.length > 0) {
-                                        newId = allContactsArray[allContactsArray.length-1].id+1;
-                                    }
-                                    else {
-                                        newId = allContactsArray.length+1;
-                                    }
-
-                                    allContactsArray.push({
-                                        id: newId,
-                                        name: name.value,
-                                        email: email.value,
-                                        orangeNumber: orangeNumber.value,
-                                        lonestarNumber: lonestarNumber.value,
-                                        location: location.value,
-                                        details: details.value,
-                                        profile: profileURLData,
-                                    })
-
-                                    localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
-
-                                    renderContacts();
-
-                                    name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
-
-                                    profile.style.display = "none";
-                                    fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
-
-                                    if (contactsTable.textContent.length > 40) {
-                                        getStartedDiv.style.display = "none";
-                                    }
-
-                                    alertDiv.style.display = "block";
-                                    alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
-
-                                    setTimeout(() => {
-                                        alertDiv.style.display = "none";
-                                    }, 3000);
+                                if (allContactsArray.length > 0) {
+                                    newId = allContactsArray[allContactsArray.length-1].id+1;
                                 }
-
                                 else {
-                                    alertDiv.innerText = "Please Select a Profile Photo for this Contact!";
-                                    alertDiv.style.display = "block";
-                                    profilePhoto.style.outline = "5px solid crimson";
-
-                                    setTimeout(() => {
-                                        alertDiv.style.display = "none";
-                                    }, 3000);
+                                    newId = allContactsArray.length+1;
                                 }
+
+                                allContactsArray.push({
+                                    id: newId,
+                                    name: name.value,
+                                    email: email.value,
+                                    orangeNumber: orangeNumber.value,
+                                    lonestarNumber: lonestarNumber.value,
+                                    location: location.value,
+                                    details: details.value,
+                                    profile: profileURLData,
+                                })
+
+                                localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
+
+                                renderContacts();
+
+                                name.value = ""; email.value = ""; orangeNumber.value = ""; lonestarNumber.value = ""; details.value = ""; location.value = ""; profile.src = "";
+
+                                profile.style.display = "none";
+                                fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; fileBtn.style.outline = "none";
+
+                                if (contactsTable.textContent.length > 40) {
+                                    getStartedDiv.style.display = "none";
+                                }
+
+                                alertDiv.style.display = "block";
+                                alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
+
+                                setTimeout(() => {
+                                    alertDiv.style.display = "none";
+                                }, 3000);
                             }
 
                             else {

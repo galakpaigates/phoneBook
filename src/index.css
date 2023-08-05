@@ -8,6 +8,16 @@
     cursor: default;
 }
 
+#removeAlert {
+    padding: 3px 10px;
+    font-weight: 800;
+    float: right;
+    color: #ffffff;
+    z-index: 999;
+    background-color: #9e9c9c;
+    cursor: pointer;
+}
+
 #alertDiv {
     position: absolute;
     top: 7vh;

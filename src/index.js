@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingDiv = document.getElementById('loadingDiv');
     const getStartedDiv = document.querySelector('.getStartedDiv');
     const alertDiv = document.getElementById('alertDiv');
+    const alertMessage = document.getElementById("alertMessage");
     const contactProfilePageDiv = document.getElementById('contactProfilePageDiv');
     const rightClickOptionsDiv = document.getElementById('rightClickOptionsDiv');
 
@@ -270,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     renderContacts();
 
-                    alertDiv.innerText = "Contacts Added to Favorites!";
+                    alertMessage.innerText = "Contacts Added to Favorites!";
                     alertDiv.style.display = "block";
     
                     setTimeout(() => {
@@ -288,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             else {
-                alertDiv.innerText = "You don't have any Contacts yet! \nClick the 'Create New' Button to get Started!";
+                alertMessage.innerText = "You don't have any Contacts yet! \nClick the 'Create New' Button to get Started!";
                 alertDiv.style.display = "block";
 
                 setTimeout(() => {
@@ -320,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 contactsTable.style.display = "list-item"; contactsTable.style.listStyleType = "none"; contactsTable.style.marginTop = "12px";
             }
             else {
+                alertMessage.innerText = "You don't have any Contacts yet! \nClick the 'Create New' Button in the Menu to Create a New Contact!";
                 alertDiv.style.display = "block";
-                alertDiv.innerText = "You don't have any Contacts yet! \nClick the 'Create New' Button in the Menu to Create a New Contact!";
 
                 setTimeout(() => {
                     alertDiv.style.display = "none";
@@ -333,6 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
             contactProfilePageDiv.innerHTML = "";
             contactProfilePageDiv.style.display = "none";
             contactsTable.style.display = "table-row-group";
+        }
+
+        if (userChoice.id === "removeAlert") {
+            alertDiv.style.display = "none";
         }
 
         if (userChoice.tagName === "TR" || userChoice.tagName === "TD" || userChoice.tagName === "IMG" || userChoice.tagName === "H3") {
@@ -496,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         localStorage.setItem('allContactsArray', JSON.stringify(allContactsArray));
 
-                        alertDiv.innerText = "Edit Saved!";
+                        alertMessage.innerText = "Edit Saved!";
                         alertDiv.style.display = "block";
 
                         setTimeout(() => {
@@ -522,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteButton.addEventListener('click', (event) => {
                     deleteButton.disabled = true;
 
-                    alertDiv.innerText = "Contact Deleted!";
+                    alertMessage.innerText = "Contact Deleted!";
                     alertDiv.style.display = "block";
                     setTimeout(() => {
                         const pendingDelete = allContactsArray.findIndex((contact) => contact.name === title)
@@ -575,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             else {
-                alertDiv.innerText = "Please Select an Image!";
+                alertMessage.innerText = "Please Select an Image!";
                 alertDiv.style.display = "block";
                 fileBtn.style.outline = "5px solid crimson";
                 fileBtn.style.display = "list-item"; fileBtn.style.listStyleType = "none"; profilePhoto.style.display = "none";
@@ -661,8 +666,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     getStartedDiv.style.display = "none";
                                 }
 
+                                alertMessage.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
                                 alertDiv.style.display = "block";
-                                alertDiv.innerText = "Contact Added to Phone Book! \nClick the 'View Contacts Button to View Stored Contacts!";
 
                                 setTimeout(() => {
                                     alertDiv.style.display = "none";
@@ -671,7 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             else {
                                 details.style.outline = "5px solid crimson";
-                                alertDiv.innerText = "Please Check the Length of the Details Field! \nBe more Clear!";
+                                alertMessage.innerText = "Please Check the Length of the Details Field! \nBe more Clear!";
                                 alertDiv.style.display = "block";
                 
                                 setTimeout(() => {
@@ -683,7 +688,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         else {
                             location.style.outline = "5px solid crimson";
-                            alertDiv.innerText = "Please Check the Length of the Location Field! \nBe more Clear!";
+                            alertMessage.innerText = "Please Check the Length of the Location Field! \nBe more Clear!";
                             alertDiv.style.display = "block";
             
                             setTimeout(() => {
@@ -706,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 else {
                     lonestarNumber.style.outline = "5px solid crimson"; orangeNumber.style.outline = "5px solid crimson";
-                    alertDiv.innerText = "Please Check the Length of the Orange or Lonestar Phone Numbers!";
+                    alertMessage.innerText = "Please Check the Length of the Orange or Lonestar Phone Numbers!";
                     alertDiv.style.display = "block";
 
                     setTimeout(() => {
@@ -719,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
             else {
                 orangeNumber.style.outline = "5px solid crimson";
                 lonestarNumber.style.outline = "5px solid crimson";
-                alertDiv.innerText = "Please Start with the Country Code! \nExample: +231775326934 or +231555943559";
+                alertMessage.innerText = "Please Start with the Country Code! \nExample: +231775326934 or +231555943559";
                 alertDiv.style.display = "block";
 
                 setTimeout(() => {
@@ -731,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             alertDiv.style.display = "block";
-            alertDiv.innerText = "All the Fields are Required! \nPlease Avoid Double Spacing!";
+            alertMessage.innerText = "All the Fields are Required! \nPlease Avoid Double Spacing!";
 
             setTimeout(() => {
                 alertDiv.style.display = "none";
